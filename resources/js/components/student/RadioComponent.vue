@@ -6,11 +6,11 @@
           class="form-check-input"
           type="radio"
           :value="ans_ts.id"
-          id="flexRadioDefault1"
+          
           name="ans"
           @click="radioclic(ans_ts.id)"
         />
-        <label class="form-check-label" for="flexRadioDefault1">
+        <label class="form-check-label" >
           {{ ans_ts.result_answer }}
         </label>
       </div>

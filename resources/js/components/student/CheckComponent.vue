@@ -15,7 +15,7 @@
           v-model="checkedForm"
           @click="reset_arr"
         />
-        <label class="form-check-label" for="flexCheckDefault"
+        <label class="form-check-label" 
           >{{ ans_ts.result_answer }},{{ ans_ts.index }}
         </label>
       </div>

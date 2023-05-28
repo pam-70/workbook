@@ -45,7 +45,18 @@
         />
       </div>
     </div>
-    <viewing-component :formkontrol="formkontrol" />
+    <result-component
+      :formkontrol="formkontrol"
+      :mark="mark"
+      :prozent="prozent"
+      @exit_view="exit_view"
+    />
+    <viewing-component
+      :formkontrol="formkontrol"
+      :mark="mark"
+      :prozent="prozent"
+      @exit_view="exit_view"
+    />
   </div>
 </template>
 
@@ -55,7 +66,7 @@ export default {
   data: function () {
     return {
       numer_testa: 0, //исправить на ноль после отладки номер вопроса самая основная переменная
-      all_quest: 0,
+      all_quest: 0, // всего вопросов
       counter: 0, //время выполнения теста
       formatted: "00:00",
       polling: null,
@@ -77,6 +88,8 @@ export default {
       reset_chec: 0,
       written_val: "", // ответ письменный
       pr_textquest: "",
+      mark: "",
+      prozent: "",
     };
   },
 
@@ -252,24 +265,31 @@ export default {
 
     stop: function () {
       this.counter = 0;
-      this.formkontrol = 0;
+      this.formkontrol = -1;
       this.formatted = "00:00";
       this.numer_quest = 0;
       this.numer_testa = 0;
       clearInterval(this.polling);
       console.log("STOP TIME"); //здесь остановка выполнения теста подсчет заданий
-          const data_result = {
-            //text_var: this.written_val,
-            result_id: this.result_id,
-            //numer_quest: this.numer_quest,
-          };
-          axios.post("/resulttest", data_result ).then((response) => {
-            console.log("Ответ");
-          });
 
-
+      const data_result = {
+        //text_var: this.written_val,
+        result_id: this.result_id,
+        all_quest: this.all_quest,
+      };
+      axios.post("/resulttest", data_result).then((response) => {
+        this.mark = response.data.mark;
+        this.prozent = response.data.prozent;
+        console.log((this.counter = response.data.mark));
+        console.log((this.counter = response.data.prozent));
+      });
 
       //
+    },
+    exit_view: function () {
+      this.formkontrol = 0;
+      this.mark = "";
+      this.prozent = "";
     },
     analiz: function () {
       if (this.counter < 1) {

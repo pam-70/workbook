@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 //use Illuminate\Support\Facades\DB;
-use App\Models\DB;
+use Illuminate\Support\Facades\DB;
+
 use App\Models\Answer;
 use App\Models\Question;
 use App\Models\User;
 use App\Models\Resulanswer;
 use App\Models\Resulquestion;
 use App\Models\Result;
+use App\Models\Instal;
 use Illuminate\Http\Request;
 
 
@@ -16,6 +18,23 @@ class PerenosController extends Controller
 {
     public function perenos()
     {
+           $rt = Result::find(271)
+                ->update(['mark' => 13]);
+                
+
+
+
+       $inst =Instal::find(7)->data *1;
+       
+       dd($inst);
+//        Метод whereBetween() проверяет, что значения столбца находится в указанном интервале:
+
+// $users = DB::table('users')
+//                     ->whereBetween('votes', [1, 100])->get();
+
+    }
+    public function perenos10()
+    { //подсчет правильных ответов
         $test_id = 256; //257,256,258
         $faithful = 0; //верный ответов
         $itog = Resulquestion::with("question", "resultanswer")
@@ -73,15 +92,15 @@ class PerenosController extends Controller
         //    ->leftJoin("answers", "questions.id", '=', "answers.question_id")
         //    // ->rightJoin("answers", "questions.id", '=', "answers.question_id")
         //     ->get();
-         $itog = DB::table("resulquestions")
-             ->where("result_id", "258") //256  258
-             ->join("questions", "resulquestions.question_id", '=', "questions.id")
-             ->leftJoin("resulanswers", "resulquestions.id", '=', "resulanswers.resulquestion_id")
-        //    ->leftJoin("answers", "questions.id", '=', "answers.question_id")
-        //    // ->rightJoin("answers", "questions.id", '=', "answers.question_id")
+        $itog = DB::table("resulquestions")
+            ->where("result_id", "258") //256  258
+            ->join("questions", "resulquestions.question_id", '=', "questions.id")
+            ->leftJoin("resulanswers", "resulquestions.id", '=', "resulanswers.resulquestion_id")
+            //    ->leftJoin("answers", "questions.id", '=', "answers.question_id")
+            //    // ->rightJoin("answers", "questions.id", '=', "answers.question_id")
             ->get();
 
-            
+
 
 
 

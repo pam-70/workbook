@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Models\Question;
 use App\Models\Result;
 use App\Models\Resulquestion;
 use App\Models\Answer;
-use DB;
 use App\Models\Resulanswer;
 use App\Models\Instal;
 
@@ -22,6 +22,82 @@ class TestController extends Controller
     public function resulttest(Request $request)
     {
         if ($request->isMethod('POST')) {
+
+            $test_id = 256; //257,256,258
+            $test_id = $request->result_id;
+            $faithful = 0; //верных ответов
+            $itog = Resulquestion::with("question", "resultanswer")
+                ->where("result_id", $test_id)
+                ->get(); //`result_id`
+            foreach ($itog as $itog_v) {
+                if ($itog_v->question[0]['vid'] == 3) { //если писменный ответ
+                    if (trim(mb_strtoupper($itog_v->right_answer_str)) == trim(mb_strtoupper($itog_v->student_answer_str))) {
+                        if (trim(mb_strtoupper($itog_v->right_answer_str)) != "") {
+                            $faithful++;
+                        }
+                    }
+                }
+                $vsego = 0;
+                $ansv = 0;
+                $answ_wsego = 0;
+                foreach ($itog_v->resultanswer as $rezansw) {
+                    if ($itog_v->question[0]['vid'] == 1) { //выборный ответ
+                        if (trim(mb_strtoupper($rezansw->right_answer)) == trim(mb_strtoupper($rezansw->student_answer))) {
+                            if (trim(mb_strtoupper($rezansw->right_answer)) == "1") {
+                                $faithful++;
+                            }
+                        }
+                    }
+                    if ($itog_v->question[0]['vid'] == 2) { //множественный ответ
+                        if (trim(mb_strtoupper($rezansw->right_answer)) == "1") {
+                            $vsego++;
+                        }
+                        if (trim(mb_strtoupper($rezansw->student_answer)) == "1") {
+                            $answ_wsego++;
+                        }
+                        if (trim(mb_strtoupper($rezansw->right_answer)) == "1") {
+                            if (trim(mb_strtoupper($rezansw->right_answer)) == trim(mb_strtoupper($rezansw->student_answer))) {
+                                $ansv++;
+                            }
+                        }
+                    }
+                }
+                if ($ansv == $vsego and $vsego != 0 and $answ_wsego == $ansv) {
+                    $faithful++;
+                }
+                $vsego = 0;
+                $ansv = 0;
+                $answ_wsego = 0;
+            }
+            $prozent = round((($faithful / $request->all_quest) * 100), 2);
+
+            $mark5 = Instal::find(7)->data * 1; //5
+            $mark4 = Instal::find(8)->data * 1; //4
+            $mark3 = Instal::find(9)->data * 1; //3
+            if ($prozent > $mark5) {
+                $mark = 5;
+            }
+            if ($prozent < $mark5 and $prozent > $mark4) {
+                $mark = 4;
+            }
+            if ($prozent < $mark4 and $prozent > $mark3) {
+                $mark = 3;
+            }
+            if ($prozent < $mark3) {
+                $mark = 2;
+            }
+            Result::find($test_id)
+                ->update(['mark' => $mark]);
+
+
+            $url_dat = [
+                'mark' => $mark,
+                'prozent' => $prozent,
+            ];
+
+            return ($url_dat);
+            // dump($faithful);
+            // dd($itog);
         }
     }
     ///---------------------------------------------------
@@ -40,7 +116,8 @@ class TestController extends Controller
             $arr_chec = $request->check_arr;
             foreach ($arr_chec as $check_id) {
                 Resulanswer::where('id', $check_id)
-                    ->update(['student_answer' => 1]);            }
+                    ->update(['student_answer' => 1]);
+            }
             $url_dat = [
                 //'numer_ts' => "YES",
                 // 'quest_test' => $next_zapr,

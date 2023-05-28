@@ -2,10 +2,10 @@
   <div v-if="formkontrol == 0" class="row">
     <div class="col-md-4">
       <div class="mb-3">
-        <label for="exampleInputPassword1" class="form-label"
+        <label  class="form-label"
           >Введите номер задания</label
         >
-        <label for="exampleInputPassword1" class="form-label"
+        <label  class="form-label"
           > <font size="3" color="red"><b>{{notest}}</b></font></label
         >
         <input v-model=test_numer type="text" class="form-control" id="numer" />
@@ -14,7 +14,7 @@
 
     <div class="col-md-4">
       <div v-if="test_numer" class="mb-3">
-        <label for="exampleInputPassword1" class="form-label"
+        <label  class="form-label"
           >Начать выполнение задания</label
         >
         <p>
@@ -26,7 +26,7 @@
     </div>
     <div class="col-md-4">
       <div  class="mb-3">
-        <label for="exampleInputPassword1" class="form-label"
+        <label  class="form-label"
           >Просмотреть выполненных заданий{{ numer_testa }}</label
         >
         <p>

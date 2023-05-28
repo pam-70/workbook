@@ -31,8 +31,9 @@ Vue.component('radio-component', require('./components/student/RadioComponent.vu
 Vue.component('check-component', require('./components/student/CheckComponent.vue').default);//чекбоксы
 Vue.component('written-component', require('./components/student/WrittenComponent.vue').default);//письменный ответ
 Vue.component('toanswer-component', require('./components/student/ToanswerComponent.vue').default);//кнопка начать  выполнения задания
-Vue.component('viewing-component', require('./components/student/ViewingComponent.vue').default);//просмотр выполненных заданий
-Vue.component('testexecution-component', require('./components/student/TestexecutionComponent.vue').default);//просмотр выполненных заданий
+Vue.component('viewing-component', require('./components/student/ViewingComponent.vue').default);//просмотр последненго задания
+Vue.component('result-component', require('./components/student/ResultComponent.vue').default);//просмотр всех выполненных заданий
+Vue.component('testexecution-component', require('./components/student/TestexecutionComponent.vue').default);//главное окно
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

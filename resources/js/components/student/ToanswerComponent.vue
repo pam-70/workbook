@@ -4,7 +4,7 @@
       <button @click="to_answert()" type="button" class="btn btn-success">
         Ответить
       </button>
-      <label for="exampleInputPassword1" class="form-label">
+      <label  class="form-label">
         <font size="3" color="red"
           ><b>{{ empty_answer }}</b></font
         ></label

@@ -2332,6 +2332,33 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/student/ResultComponent.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/student/ResultComponent.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    formkontrol: "",
+    mark: "",
+    prozent: ""
+  },
+  mounted: function mounted() {
+    //console.log("Component mounted.");
+  },
+  methods: {
+    exit_view: function exit_view() {
+      this.$emit("exit_view");
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/student/ShowComponent.vue?vue&type=script&lang=js&":
 /*!********************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/student/ShowComponent.vue?vue&type=script&lang=js& ***!
@@ -2471,6 +2498,7 @@ __webpack_require__.r(__webpack_exports__);
       numer_testa: 0,
       //исправить на ноль после отладки номер вопроса самая основная переменная
       all_quest: 0,
+      // всего вопросов
       counter: 0,
       //время выполнения теста
       formatted: "00:00",
@@ -2501,7 +2529,9 @@ __webpack_require__.r(__webpack_exports__);
       reset_chec: 0,
       written_val: "",
       // ответ письменный
-      pr_textquest: ""
+      pr_textquest: "",
+      mark: "",
+      prozent: ""
     };
   },
   mounted: function mounted() {
@@ -2678,26 +2708,35 @@ __webpack_require__.r(__webpack_exports__);
     },
 
     stop: function stop() {
+      var _this5 = this;
       this.counter = 0;
-      this.formkontrol = 0;
+      this.formkontrol = -1;
       this.formatted = "00:00";
       this.numer_quest = 0;
       this.numer_testa = 0;
       clearInterval(this.polling);
       console.log("STOP TIME"); //здесь остановка выполнения теста подсчет заданий
+
       var data_result = {
         //text_var: this.written_val,
-        result_id: this.result_id
-        //numer_quest: this.numer_quest,
+        result_id: this.result_id,
+        all_quest: this.all_quest
       };
-
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/resulttest", data_result).then(function (response) {
-        console.log("Ответ");
+        _this5.mark = response.data.mark;
+        _this5.prozent = response.data.prozent;
+        console.log(_this5.counter = response.data.mark);
+        console.log(_this5.counter = response.data.prozent);
       });
 
       //
     },
 
+    exit_view: function exit_view() {
+      this.formkontrol = 0;
+      this.mark = "";
+      this.prozent = "";
+    },
     analiz: function analiz() {
       if (this.counter < 1) {
         this.stop();
@@ -2749,10 +2788,17 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
-    formkontrol: ""
+    formkontrol: "",
+    mark: "",
+    prozent: ""
   },
   mounted: function mounted() {
-    console.log("Component mounted.");
+    //console.log("Component mounted.");
+  },
+  methods: {
+    exit_view: function exit_view() {
+      this.$emit("exit_view");
+    }
   }
 });
 
@@ -3316,10 +3362,7 @@ var render = function render() {
         }
       }
     }), _vm._v(" "), _c("label", {
-      staticClass: "form-check-label",
-      attrs: {
-        "for": "flexCheckDefault"
-      }
+      staticClass: "form-check-label"
     }, [_vm._v(_vm._s(ans_ts.result_answer) + "," + _vm._s(ans_ts.index) + "\n      ")])]);
   }), 0)]) : _vm._e();
 };
@@ -3426,7 +3469,6 @@ var render = function render() {
       staticClass: "form-check-input",
       attrs: {
         type: "radio",
-        id: "flexRadioDefault1",
         name: "ans"
       },
       domProps: {
@@ -3438,12 +3480,57 @@ var render = function render() {
         }
       }
     }), _vm._v(" "), _c("label", {
-      staticClass: "form-check-label",
-      attrs: {
-        "for": "flexRadioDefault1"
-      }
+      staticClass: "form-check-label"
     }, [_vm._v("\n        " + _vm._s(ans_ts.result_answer) + "\n      ")])]);
   }), 0)]) : _vm._e();
+};
+var staticRenderFns = [];
+render._withStripped = true;
+
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/student/ResultComponent.vue?vue&type=template&id=621ad6f1&":
+/*!********************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/student/ResultComponent.vue?vue&type=template&id=621ad6f1& ***!
+  \********************************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function render() {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _vm.formkontrol == -2 ? _c("div", [_c("div", {
+    staticClass: "row g-2"
+  }, [_c("div", {
+    staticClass: "col-md-12"
+  }, [_c("div", {
+    staticClass: "p-3 border bg-light"
+  }, [_c("div", {
+    staticClass: "row"
+  }, [_c("div", {
+    staticClass: "col-md-10"
+  }, [_c("div", {
+    staticClass: "text"
+  }, [_vm._v("\n              Выполнили задание на " + _vm._s(_vm.mark) + " процент выполнения =\n              " + _vm._s(_vm.prozent) + "\n            ")])]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-2"
+  }, [_c("div", {
+    staticClass: "butv"
+  }, [_c("button", {
+    staticClass: "btn btn-outline-danger",
+    attrs: {
+      type: "button"
+    },
+    on: {
+      click: function click($event) {
+        return _vm.exit_view();
+      }
+    }
+  }, [_vm._v("\n                Закончить просмотр\n              ")])])])])])])])]) : _vm._e();
 };
 var staticRenderFns = [];
 render._withStripped = true;
@@ -3515,15 +3602,9 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "mb-3"
   }, [_c("label", {
-    staticClass: "form-label",
-    attrs: {
-      "for": "exampleInputPassword1"
-    }
+    staticClass: "form-label"
   }, [_vm._v("Введите номер задания")]), _vm._v(" "), _c("label", {
-    staticClass: "form-label",
-    attrs: {
-      "for": "exampleInputPassword1"
-    }
+    staticClass: "form-label"
   }, [_c("font", {
     attrs: {
       size: "3",
@@ -3555,10 +3636,7 @@ var render = function render() {
   }, [_vm.test_numer ? _c("div", {
     staticClass: "mb-3"
   }, [_c("label", {
-    staticClass: "form-label",
-    attrs: {
-      "for": "exampleInputPassword1"
-    }
+    staticClass: "form-label"
   }, [_vm._v("Начать выполнение задания")]), _vm._v(" "), _c("p", [_c("button", {
     staticClass: "btn btn-primary",
     attrs: {
@@ -3574,10 +3652,7 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "mb-3"
   }, [_c("label", {
-    staticClass: "form-label",
-    attrs: {
-      "for": "exampleInputPassword1"
-    }
+    staticClass: "form-label"
   }, [_vm._v("Просмотреть выполненных заданий" + _vm._s(_vm.numer_testa))]), _vm._v(" "), _vm._m(0)])])]) : _vm._e();
 };
 var staticRenderFns = [function () {
@@ -3677,9 +3752,23 @@ var render = function render() {
     on: {
       to_answert: _vm.to_answert
     }
-  })], 1)]), _vm._v(" "), _c("viewing-component", {
+  })], 1)]), _vm._v(" "), _c("result-component", {
     attrs: {
-      formkontrol: _vm.formkontrol
+      formkontrol: _vm.formkontrol,
+      mark: _vm.mark,
+      prozent: _vm.prozent
+    },
+    on: {
+      exit_view: _vm.exit_view
+    }
+  }), _vm._v(" "), _c("viewing-component", {
+    attrs: {
+      formkontrol: _vm.formkontrol,
+      mark: _vm.mark,
+      prozent: _vm.prozent
+    },
+    on: {
+      exit_view: _vm.exit_view
     }
   })], 1);
 };
@@ -3716,10 +3805,7 @@ var render = function render() {
       }
     }
   }, [_vm._v("\n      Ответить\n    ")]), _vm._v(" "), _c("label", {
-    staticClass: "form-label",
-    attrs: {
-      "for": "exampleInputPassword1"
-    }
+    staticClass: "form-label"
   }, [_c("font", {
     attrs: {
       size: "3",
@@ -3747,19 +3833,35 @@ __webpack_require__.r(__webpack_exports__);
 var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
-  return _vm.formkontrol == -1 ? _c("div", [_vm._m(0)]) : _vm._e();
-};
-var staticRenderFns = [function () {
-  var _vm = this,
-    _c = _vm._self._c;
-  return _c("div", {
+  return _vm.formkontrol == -1 ? _c("div", [_c("div", {
     staticClass: "row g-2"
   }, [_c("div", {
     staticClass: "col-md-12"
   }, [_c("div", {
     staticClass: "p-3 border bg-light"
-  }, [_vm._v("\n        Блок просмотра результатов выполнения задания\n      ")])])]);
-}];
+  }, [_c("div", {
+    staticClass: "row"
+  }, [_c("div", {
+    staticClass: "col-md-10"
+  }, [_c("div", {
+    staticClass: "text"
+  }, [_vm._v("\n              Выполнили задание на " + _vm._s(_vm.mark) + " процент выполнения =\n              " + _vm._s(_vm.prozent) + "\n            ")])]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-2"
+  }, [_c("div", {
+    staticClass: "butv"
+  }, [_c("button", {
+    staticClass: "btn btn-outline-danger",
+    attrs: {
+      type: "button"
+    },
+    on: {
+      click: function click($event) {
+        return _vm.exit_view();
+      }
+    }
+  }, [_vm._v("\n                Закончить просмотр\n              ")])])])])])])])]) : _vm._e();
+};
+var staticRenderFns = [];
 render._withStripped = true;
 
 
@@ -51513,8 +51615,9 @@ Vue.component('radio-component', __webpack_require__(/*! ./components/student/Ra
 Vue.component('check-component', __webpack_require__(/*! ./components/student/CheckComponent.vue */ "./resources/js/components/student/CheckComponent.vue")["default"]); //чекбоксы
 Vue.component('written-component', __webpack_require__(/*! ./components/student/WrittenComponent.vue */ "./resources/js/components/student/WrittenComponent.vue")["default"]); //письменный ответ
 Vue.component('toanswer-component', __webpack_require__(/*! ./components/student/ToanswerComponent.vue */ "./resources/js/components/student/ToanswerComponent.vue")["default"]); //кнопка начать  выполнения задания
-Vue.component('viewing-component', __webpack_require__(/*! ./components/student/ViewingComponent.vue */ "./resources/js/components/student/ViewingComponent.vue")["default"]); //просмотр выполненных заданий
-Vue.component('testexecution-component', __webpack_require__(/*! ./components/student/TestexecutionComponent.vue */ "./resources/js/components/student/TestexecutionComponent.vue")["default"]); //просмотр выполненных заданий
+Vue.component('viewing-component', __webpack_require__(/*! ./components/student/ViewingComponent.vue */ "./resources/js/components/student/ViewingComponent.vue")["default"]); //просмотр последненго задания
+Vue.component('result-component', __webpack_require__(/*! ./components/student/ResultComponent.vue */ "./resources/js/components/student/ResultComponent.vue")["default"]); //просмотр всех выполненных заданий
+Vue.component('testexecution-component', __webpack_require__(/*! ./components/student/TestexecutionComponent.vue */ "./resources/js/components/student/TestexecutionComponent.vue")["default"]); //главное окно
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -52055,6 +52158,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_RadioComponent_vue_vue_type_template_id_e3bc3a7e___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_RadioComponent_vue_vue_type_template_id_e3bc3a7e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/student/ResultComponent.vue":
+/*!*************************************************************!*\
+  !*** ./resources/js/components/student/ResultComponent.vue ***!
+  \*************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ResultComponent_vue_vue_type_template_id_621ad6f1___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ResultComponent.vue?vue&type=template&id=621ad6f1& */ "./resources/js/components/student/ResultComponent.vue?vue&type=template&id=621ad6f1&");
+/* harmony import */ var _ResultComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ResultComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/student/ResultComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ResultComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ResultComponent_vue_vue_type_template_id_621ad6f1___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ResultComponent_vue_vue_type_template_id_621ad6f1___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/student/ResultComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/student/ResultComponent.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************!*\
+  !*** ./resources/js/components/student/ResultComponent.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ResultComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./ResultComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/student/ResultComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ResultComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/student/ResultComponent.vue?vue&type=template&id=621ad6f1&":
+/*!********************************************************************************************!*\
+  !*** ./resources/js/components/student/ResultComponent.vue?vue&type=template&id=621ad6f1& ***!
+  \********************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_ResultComponent_vue_vue_type_template_id_621ad6f1___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!../../../../node_modules/vue-loader/lib??vue-loader-options!./ResultComponent.vue?vue&type=template&id=621ad6f1& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/student/ResultComponent.vue?vue&type=template&id=621ad6f1&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_ResultComponent_vue_vue_type_template_id_621ad6f1___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_ResultComponent_vue_vue_type_template_id_621ad6f1___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
