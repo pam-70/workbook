@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 //use Illuminate\Support\Facades\DB;
-use DB;
+use App\Models\DB;
 use App\Models\Answer;
 use App\Models\Question;
 use App\Models\User;
@@ -15,6 +15,56 @@ use Illuminate\Http\Request;
 class PerenosController extends Controller
 {
     public function perenos()
+    {
+        $test_id = 256; //257,256,258
+        $faithful = 0; //верный ответов
+        $itog = Resulquestion::with("question", "resultanswer")
+            ->where("result_id", $test_id)
+            ->get(); //`result_id`
+        foreach ($itog as $itog_v) {
+            if ($itog_v->question[0]['vid'] == 3) { //если писменный ответ
+                if (trim(mb_strtoupper($itog_v->right_answer_str)) == trim(mb_strtoupper($itog_v->student_answer_str))) {
+                    if (trim(mb_strtoupper($itog_v->right_answer_str)) != "") {
+                        $faithful++;
+                    }
+                }
+            }
+            $vsego = 0;
+            $ansv = 0;
+            $answ_wsego = 0;
+            foreach ($itog_v->resultanswer as $rezansw) {
+                if ($itog_v->question[0]['vid'] == 1) { //выборный ответ
+                    if (trim(mb_strtoupper($rezansw->right_answer)) == trim(mb_strtoupper($rezansw->student_answer))) {
+                        if (trim(mb_strtoupper($rezansw->right_answer)) == "1") {
+                            $faithful++;
+                        }
+                    }
+                }
+                if ($itog_v->question[0]['vid'] == 2) { //множественный ответ
+                    if (trim(mb_strtoupper($rezansw->right_answer)) == "1") {
+                        $vsego++;
+                    }
+                    if (trim(mb_strtoupper($rezansw->student_answer)) == "1") {
+                        $answ_wsego++;
+                    }
+                    if (trim(mb_strtoupper($rezansw->right_answer)) == "1") {
+                        if (trim(mb_strtoupper($rezansw->right_answer)) == trim(mb_strtoupper($rezansw->student_answer))) {
+                            $ansv++;
+                        }
+                    }
+                }
+            }
+            if ($ansv == $vsego and $vsego != 0 and $answ_wsego == $ansv) {
+                $faithful++;
+            }
+            $vsego = 0;
+            $ansv = 0;
+            $answ_wsego = 0;
+        }
+        dump($faithful);
+        dd($itog);
+    }
+    public function perenos9()
     { //Проверка переноса строк 
         //количество вопросов из формы
         // $itog = DB::table("resulquestions")
