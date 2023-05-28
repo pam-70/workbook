@@ -1,0 +1,24 @@
+*{
+    box-sizing:border-box;
+}
+
+body {
+    margin:0;
+
+
+}
+.col-md-4, .col-md-8, .col-md-12, .col-md-3, .col-md-6 , .col-md-5 {
+    padding: 10px; /* Поля */
+    background: #E5D3BD; /* Цвет фона */
+    border: 2px solid #f4f5ed; /* Параметры рамки */
+    background: #f1f1e9;
+    margin-bottom: 10px;
+    margin-top: 5px;
+    height: 150 px;
+}
+.btn-outline-primary, .btn-outline-dange {
+    position:absolute;
+    margin: 10px 10px 10px 10px;
+    right:0;
+
+}
