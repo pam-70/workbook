@@ -269,9 +269,9 @@ export default {
       this.formkontrol = -1;
       this.formatted = "00:00";
       this.numer_quest = 0;
-      this.numer_testa = 0;
+      //this.numer_testa = 0;
       clearInterval(this.polling);
-      console.log("STOP TIME"); //здесь остановка выполнения теста подсчет заданий
+      //console.log("STOP TIME"); //здесь остановка выполнения теста подсчет заданий
 
       const data_result = {
         //text_var: this.written_val,
@@ -281,8 +281,8 @@ export default {
       axios.post("/resulttest", data_result).then((response) => {
         this.mark = response.data.mark;
         this.prozent = response.data.prozent;
-        console.log((this.counter = response.data.mark));
-        console.log((this.counter = response.data.prozent));
+       // console.log((this.counter = response.data.mark));
+       // console.log((this.counter = response.data.prozent));
       });
 
       //

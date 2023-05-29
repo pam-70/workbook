@@ -7,16 +7,16 @@
             <div class="col-md-10">
               <div class="text">
                 <div v-if="mark === 2">
-                  <font size="4" color="#000000"><b> Задание выполненно на {{ mark }}</b></font>
+                  <font size="4" color="#000000"><b> Задание {{numer_testa}} выполненно на {{ mark }}</b></font>
                 </div>
                 <div v-if="mark === 3">
-                  <font size="4" color="#4B0082"><b> Задание выполненно на {{ mark }}</b></font>
+                  <font size="4" color="#4B0082"><b> Задание {{numer_testa}} выполненно на {{ mark }}</b></font>
                 </div>
                 <div v-if="mark === 4">
-                  <font size="4" color="#008000"><b> Задание выполненно на {{ mark }}</b></font>
+                  <font size="4" color="#008000"><b> Задание {{numer_testa}} выполненно на {{ mark }}</b></font>
                 </div>
                 <div v-if="mark === 5">
-                  <font size="4" color="#FF0000"><b> Задание выполненно на {{ mark }}</b></font>
+                  <font size="4" color="#FF0000"><b> Задание {{numer_testa}} выполненно на {{ mark }}</b></font>
                 </div>
               </div>
             </div>
