@@ -19,10 +19,19 @@ class TestController extends Controller
     {
         $this->middleware('auth');
     }
-    public function resulttest(Request $request)
-    {
+    public function resultview(Request $request)
+    { //письменный ответ
         if ($request->isMethod('POST')) {
 
+
+
+            
+        }
+    }
+    public function resulttest(Request $request)
+    {
+        if ($request->isMethod('POST')) // подсчет результатов и выставление
+        {
             $test_id = 256; //257,256,258
             $test_id = $request->result_id;
             $faithful = 0; //верных ответов
@@ -86,6 +95,7 @@ class TestController extends Controller
             if ($prozent < $mark3) {
                 $mark = 2;
             }
+            // $mark = "5";
             Result::find($test_id)
                 ->update(['mark' => $mark]);
 

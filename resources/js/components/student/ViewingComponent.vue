@@ -1,5 +1,5 @@
 <template>
-  <div v-if="formkontrol == -1">
+  <div v-if="formkontrol == -2">
     <div class="row g-2">
       <div class="col-md-12">
         <div class="p-3 border bg-light">

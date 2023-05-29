@@ -49,6 +49,7 @@
       :formkontrol="formkontrol"
       :mark="mark"
       :prozent="prozent"
+      :numer_testa="numer_testa"
       @exit_view="exit_view"
     />
     <viewing-component
@@ -88,7 +89,7 @@ export default {
       reset_chec: 0,
       written_val: "", // ответ письменный
       pr_textquest: "",
-      mark: "",
+      mark: 0,
       prozent: "",
     };
   },

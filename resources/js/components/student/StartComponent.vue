@@ -27,7 +27,7 @@
     <div class="col-md-4">
       <div  class="mb-3">
         <label  class="form-label"
-          >Просмотреть выполненных заданий{{ numer_testa }}</label
+          >Просмотреть выполненных заданий</label
         >
         <p>
           <button type="submit" class="btn btn-info">Просмотреть</button>

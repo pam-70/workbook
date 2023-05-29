@@ -2,8 +2,9 @@
 Делаем какие то записи
 
 git fetch забираем с гита в папку гита
-
+git fetch https://github.com/pam-70/workbook.git
 git pull вносим изменения в проект
+git reset --hard отменить изменения в проекте
 ---------------------------------
 git add .
 
@@ -12,3 +13,9 @@ git commit -m "prob1"
 (git push origin head) имя удаленного репозитория origin
 
 git push
+----------------------------------------------------
+после скачивания с гита
+изменить расшитение файла на env
+composer update   
+php artisan key:generate
+npm update

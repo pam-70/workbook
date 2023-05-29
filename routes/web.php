@@ -40,3 +40,4 @@ Route::match(['get', 'post'], '/next', ['as' => 'next', 'uses' => 'App\Http\Cont
 Route::match(['get', 'post'], '/checkanswer', ['as' => 'checkanswer', 'uses' => 'App\Http\Controllers\TestController@checkanswer']);//при check форме
 Route::match(['get', 'post'], '/textansver', ['as' => 'textansver', 'uses' => 'App\Http\Controllers\TestController@textansver']);//при работе на тексовой форма
 Route::match(['get', 'post'], '/resulttest', ['as' => 'resulttest', 'uses' => 'App\Http\Controllers\TestController@resulttest']);//результат теста
+Route::match(['get', 'post'], '/resultview', ['as' => 'resultview', 'uses' => 'App\Http\Controllers\TestController@resultview']);//результаты всех тестов
