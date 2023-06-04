@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\DB;
 
 use App\Models\Answer;
 use App\Models\Question;
+use App\Models\Klass;
+use App\Models\School;
 use App\Models\User;
 use App\Models\Resulanswer;
 use App\Models\Resulquestion;
@@ -18,15 +20,9 @@ class PerenosController extends Controller
 {
     public function perenos()
     {
-           $rt = Result::find(271)
-                ->update(['mark' => 13]);
-                
-
-
-
-       $inst =Instal::find(7)->data *1;
+        $idstr = School::all();
        
-       dd($inst);
+       dd($idstr->klass);
 //        Метод whereBetween() проверяет, что значения столбца находится в указанном интервале:
 
 // $users = DB::table('users')

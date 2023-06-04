@@ -35,6 +35,9 @@ Vue.component('viewing-component', require('./components/student/ViewingComponen
 Vue.component('result-component', require('./components/student/ResultComponent.vue').default);//просмотр всех выполненных заданий
 Vue.component('testexecution-component', require('./components/student/TestexecutionComponent.vue').default);//главное окно
 
+Vue.component('viewingratings-component', require('./components/admin/ViewingratingsComponent.vue').default);//главное окно
+Vue.component('schollklass-component', require('./components/admin/SchollklassComponent.vue').default);//школы класс
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

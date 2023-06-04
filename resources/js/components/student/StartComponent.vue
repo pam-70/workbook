@@ -67,11 +67,8 @@ export default {
       this.test_numer = "";
     },
     listtest: function () {
-      if ((this.test_numer).trim()==="") {
-        console.log("PUSTO");
-      } else {
-        this.$emit("listtest", this.test_numer);
-      }
+      this.$emit("listtest", this.test_numer);
+
       //console.log(this.test_numer);
     },
   },

@@ -1,23 +1,63 @@
 <template>
   <div>
     <header-component :data_student="data_student" @exit_user="exit_user" />
-    <start-component :numer_testa="numer_testa" @start_test="start_test" :formkontrol="formkontrol" :notest="notest"
-      @listtest="listtest" />
-    <show-component :timeshet="formatted" :formkontrol="formkontrol" :counter="counter" :numer_quest="numer_quest"
-      :numer_testa="numer_testa" :all_quest="all_quest" />
+    <start-component
+      :numer_testa="numer_testa"
+      @start_test="start_test"
+      :formkontrol="formkontrol"
+      :notest="notest"
+      @listtest="listtest"
+    />
+    <show-component
+      :timeshet="formatted"
+      :formkontrol="formkontrol"
+      :counter="counter"
+      :numer_quest="numer_quest"
+      :numer_testa="numer_testa"
+      :all_quest="all_quest"
+    />
     <div class="row">
       <div class="col-md-12">
-        <quest-component :formkontrol="formkontrol" :quest="quest" :pict="pict" />
-        <radio-component :formkontrol="formkontrol" :answer_test="answer_test" @radioclic="radioclic" />
-        <check-component :formkontrol="formkontrol" :answer_test="answer_test" :reset_chec="reset_chec"
-          @chec_arr="chec_arr" />
-        <written-component :formkontrol="formkontrol" @text_writte="text_writte" :pr_textquest="pr_textquest" />
-        <toanswer-component :formkontrol="formkontrol" @to_answert="to_answert" :empty_answer="empty_answer" />
+        <quest-component
+          :formkontrol="formkontrol"
+          :quest="quest"
+          :pict="pict"
+        />
+        <radio-component
+          :formkontrol="formkontrol"
+          :answer_test="answer_test"
+          @radioclic="radioclic"
+        />
+        <check-component
+          :formkontrol="formkontrol"
+          :answer_test="answer_test"
+          :reset_chec="reset_chec"
+          @chec_arr="chec_arr"
+        />
+        <written-component
+          :formkontrol="formkontrol"
+          @text_writte="text_writte"
+          :pr_textquest="pr_textquest"
+        />
+        <toanswer-component
+          :formkontrol="formkontrol"
+          @to_answert="to_answert"
+          :empty_answer="empty_answer"
+        />
       </div>
     </div>
-    <result-component :formkontrol="formkontrol" :mark="mark" :prozent="prozent" :numer_testa="numer_testa"
-      @exit_view="exit_view" />
-    <viewing-component :formkontrol="formkontrol" :mark="mark" :prozent="prozent" @exit_view="exit_view" />
+    <result-component
+      :formkontrol="formkontrol"
+      :mark="mark"
+      :prozent="prozent"
+      :numer_testa="numer_testa"
+      @exit_view="exit_view"
+    />
+    <viewing-component
+      :formkontrol="formkontrol"
+      :all_result="all_result"
+      @exit_view="exit_view"
+    />
   </div>
 </template>
 
@@ -51,7 +91,8 @@ export default {
       pr_textquest: "",
       mark: 0,
       prozent: "",
-      arr_result:"",// вывод результатов теста
+      arr_result: "", // вывод результатов теста
+      all_result: [],
     };
   },
 
@@ -117,7 +158,7 @@ export default {
         if (this.radio_cl != 0) {
           this.empty_answer = "";
           this.radio_cl = "";
-          axios.post("/radioclic", data_radio).then((response) => { });
+          axios.post("/radioclic", data_radio).then((response) => {});
           this.next(); //следующий вопрос
         } else {
           this.empty_answer = " Выберите ответ!";
@@ -132,7 +173,7 @@ export default {
             check_arr: this.checkedForm,
             check_data: 1,
           };
-          axios.post("/checkanswer", data_check).then((response) => { });
+          axios.post("/checkanswer", data_check).then((response) => {});
           this.next(); //следующий вопрос
 
           this.checkedForm = [];
@@ -149,7 +190,7 @@ export default {
             result_id: this.result_id,
             numer_quest: this.numer_quest,
           };
-          axios.post("/textansver", data_text).then((response) => { });
+          axios.post("/textansver", data_text).then((response) => {});
           this.written_val = "";
           this.pr_textquest = this.numer_quest;
 
@@ -197,7 +238,7 @@ export default {
       // console.log("UPS");
     },
     exit_user: function () {
-      axios.post("/exit").then((response) => { });
+      axios.post("/exit").then((response) => {});
       location.reload(); // обновить страницу
     },
 
@@ -258,26 +299,21 @@ export default {
         this.stop();
       }
     },
-    listtest: function (numer_testa) {// вывод всех тестов
-      //resultview
+    listtest: function (numer_tes) {
+      // вывод всех тестов
+      this.formkontrol = -2;
       const data_result = {
         //text_var: this.written_val,
-        numer_testa: numer_testa,
-
+        numer_testa: numer_tes,
       };
 
       axios.post("/resultview", data_result).then((response) => {
-        //  this.mark = response.data.mark;
-        // this.prozent = response.data.prozent;
-        console.log((this.counter = response.data.result));
-        
-
-        // console.log((this.counter = response.data.prozent));
+        this.all_result = response.data.result;
       });
     },
 
     clics: function (wer) {
-      // console.log("Родительская форма");
+      //
       this.pusk();
     },
   },

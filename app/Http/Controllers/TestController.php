@@ -22,9 +22,23 @@ class TestController extends Controller
     public function resultview(Request $request)
     { //письменный ответ
         if ($request->isMethod('POST')) {
-            $result = Result::where('t_numer', $request->numer_testa)
-                ->where('user_id', Auth::user()->id)
-                ->get();
+            if (empty($request->numer_testa)) {
+                $result = Result::where('user_id', Auth::user()->id)
+                    ->where('mark', "!=", "")
+                    ->where('mark', "!=", "0")
+                    ->orderBy('t_numer', 'asc')
+                    //->orderBy('t_numer', 'desc')
+                    ->orderBy('mark', 'desc')
+                    ->get();
+            } else {
+                $result = Result::where('t_numer', $request->numer_testa)
+                    ->where('user_id', Auth::user()->id)
+                    ->where('mark', "!=", "")
+                    ->where('mark', "!=", "0")
+                    ->orderBy('mark', 'desc')
+                    ->get();
+            }
+
             $url_dat = [
                 'result' => $result,
             ];
@@ -212,8 +226,14 @@ class TestController extends Controller
 
                 ]);
                 // echo ($id_result->id . "    =ID tebl Result <br>"); // айди записи для добавления в таблицу
+                if (Instal::find(10)->data == 0) { // если промежуточная то не 0
+                    $idstr = Question::select('id')->where("t_numer", $t_numer)->inRandomOrder()->get(); //случайный выбор 
+                } else {
 
-                $idstr = Question::select('id')->where("t_numer", $t_numer)->inRandomOrder()->get(); //случайный выбор 
+                    $idstr = Question::select('id','t_numer')->havingBetween('t_numer', [Instal::find(10)->data_n, Instal::find(10)->data_k])
+                        ->inRandomOrder()->get(); //случайный выбор 
+                }
+
                 foreach ($idstr as $name) {
                     $arr[] = $name->id;
                 }
@@ -383,14 +403,4 @@ class TestController extends Controller
         } //закончилась процедура подготовки
     }
 }
-// $res=DB::table('users')
-// ->where([
-//     ['school', $request->sh],
-//     ['klass',$request->klass],
-//     ])
-//     ->join('results','users.id','=', 'results.user_id')
-//     ->whereBetween('start', [$dtn, $dtk])//дипазон
-//     ->orderBy('users.numer','asc')
-//     ->orderBy('results.nomer','desc')
-//     ->orderBy('results.mark','desc')
-//     ->get();
+
