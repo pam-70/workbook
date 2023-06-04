@@ -70,9 +70,9 @@ export default {
       if ((this.test_numer).trim()==="") {
         console.log("PUSTO");
       } else {
-        console.log("Ne PYSTO");
+        this.$emit("listtest", this.test_numer);
       }
-      console.log(this.test_numer);
+      //console.log(this.test_numer);
     },
   },
 };

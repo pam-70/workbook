@@ -22,10 +22,13 @@ class TestController extends Controller
     public function resultview(Request $request)
     { //письменный ответ
         if ($request->isMethod('POST')) {
-
-
-
-            
+            $result = Result::where('t_numer', $request->numer_testa)
+                ->where('user_id', Auth::user()->id)
+                ->get();
+            $url_dat = [
+                'result' => $result,
+            ];
+            return ($url_dat);
         }
     }
     public function resulttest(Request $request)
