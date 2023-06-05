@@ -42,7 +42,7 @@ class admintestController extends Controller
         ];
         return ($url_dat);
     }
-    public function addschool(Request $request)
+    public function addschool(Request $request)//добавляем школу
     {
         $rezult = School::create(['nameschool' => $request->inputschool]);
         $url_dat = [
@@ -50,12 +50,30 @@ class admintestController extends Controller
         ];
         return ($url_dat);
     }
-    public function delschool(Request $request){
+    public function delschool(Request $request){// удаляем школу
         $rezult = School::destroy($request->schoolid);
         $url_dat = [
             "school" => $rezult,
         ];
         return ($url_dat);
+
+    }
+    public function filtrklass(Request $request){
+        $rezult = Klass::where('school_id',$request->schoolid)->get();
+        $url_dat = [
+            "klass" => $rezult,
+            ];
+        return ($url_dat);
+
+    }
+    public function updateklass(Request $request){
+        $rezult = Klass::where('id', $request->klassid)->update(['nameklass' => $request->inputklass]);
+        $url_dat = [
+            "klass" => "Обновил класс.",
+        ];
+        return ($url_dat);
+        //inputklass: this.inputklass,
+        //klassid: this.klassid,
 
     }
 }
