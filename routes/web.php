@@ -42,3 +42,6 @@ Route::match(['get', 'post'], '/textansver', ['as' => 'textansver', 'uses' => 'A
 Route::match(['get', 'post'], '/resulttest', ['as' => 'resulttest', 'uses' => 'App\Http\Controllers\TestController@resulttest']);//результат теста
 Route::match(['get', 'post'], '/resultview', ['as' => 'resultview', 'uses' => 'App\Http\Controllers\TestController@resultview']);//результаты всех тестов
 Route::match(['get', 'post'], '/updateadmin', ['as' => 'resultview', 'uses' => 'App\Http\Controllers\admintestController@updateadmin']);//получение данных у админа
+Route::match(['get', 'post'], '/updateschool', ['as' => 'updateschool', 'uses' => 'App\Http\Controllers\admintestController@updateschool']);//обновление данных школы
+Route::match(['get', 'post'], '/addschool', ['as' => 'addschool', 'uses' => 'App\Http\Controllers\admintestController@addschool']);//добавление школы
+Route::match(['get', 'post'], '/delschool', ['as' => 'delschool', 'uses' => 'App\Http\Controllers\admintestController@delschool']);//удаление школы

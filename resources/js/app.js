@@ -36,7 +36,7 @@ Vue.component('result-component', require('./components/student/ResultComponent.
 Vue.component('testexecution-component', require('./components/student/TestexecutionComponent.vue').default);//главное окно
 
 Vue.component('viewingratings-component', require('./components/admin/ViewingratingsComponent.vue').default);//главное окно
-Vue.component('schollklass-component', require('./components/admin/SchollklassComponent.vue').default);//школы класс
+Vue.component('schoolklass-component', require('./components/admin/SchoolklassComponent.vue').default);//школы класс
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

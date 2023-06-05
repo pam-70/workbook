@@ -14,4 +14,7 @@ class School extends Model
     {
         return $this->hasMany(Klass::class,"school_id","id");
     }
+    protected $fillable = [
+        'nameschool',
+   ];
 }

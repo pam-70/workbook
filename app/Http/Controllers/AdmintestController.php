@@ -24,12 +24,38 @@ class admintestController extends Controller
     }
     public function updateadmin(Request $request)
     {
-        $klass=Klass::all();
-        $school=School::all();
+        $klass = Klass::all();
+        $school = School::all();
         $url_dat = [
             'klass' => $klass,
-            "school"=>$school,
+            "school" => $school,
         ];
         return ($url_dat);
+    }
+    public function updateschool(Request $request) // обновляем данные школы
+    {
+        // $request->inputschool;
+        //$request->schoolid;
+        $rezult = School::where('id', $request->schoolid)->update(['nameschool' => $request->inputschool]);
+        $url_dat = [
+            "school" => $rezult,
+        ];
+        return ($url_dat);
+    }
+    public function addschool(Request $request)
+    {
+        $rezult = School::create(['nameschool' => $request->inputschool]);
+        $url_dat = [
+            "school" => $rezult,
+        ];
+        return ($url_dat);
+    }
+    public function delschool(Request $request){
+        $rezult = School::destroy($request->schoolid);
+        $url_dat = [
+            "school" => $rezult,
+        ];
+        return ($url_dat);
+
     }
 }
