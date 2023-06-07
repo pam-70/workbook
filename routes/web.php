@@ -41,9 +41,12 @@ Route::match(['get', 'post'], '/checkanswer', ['as' => 'checkanswer', 'uses' => 
 Route::match(['get', 'post'], '/textansver', ['as' => 'textansver', 'uses' => 'App\Http\Controllers\TestController@textansver']);//при работе на тексовой форма
 Route::match(['get', 'post'], '/resulttest', ['as' => 'resulttest', 'uses' => 'App\Http\Controllers\TestController@resulttest']);//результат теста
 Route::match(['get', 'post'], '/resultview', ['as' => 'resultview', 'uses' => 'App\Http\Controllers\TestController@resultview']);//результаты всех тестов
+//----------------------------------------------
 Route::match(['get', 'post'], '/updateadmin', ['as' => 'resultview', 'uses' => 'App\Http\Controllers\admintestController@updateadmin']);//получение данных у админа
 Route::match(['get', 'post'], '/updateschool', ['as' => 'updateschool', 'uses' => 'App\Http\Controllers\admintestController@updateschool']);//обновление данных школы
 Route::match(['get', 'post'], '/addschool', ['as' => 'addschool', 'uses' => 'App\Http\Controllers\admintestController@addschool']);//добавление школы
 Route::match(['get', 'post'], '/delschool', ['as' => 'delschool', 'uses' => 'App\Http\Controllers\admintestController@delschool']);//удаление школы
 Route::match(['get', 'post'], '/filtrklass', ['as' => 'filtrklass', 'uses' => 'App\Http\Controllers\admintestController@filtrklass']);//фильтуем классы
 Route::match(['get', 'post'], '/updateklass', ['as' => 'updateklass', 'uses' => 'App\Http\Controllers\admintestController@updateklass']);//обновляем классы
+Route::match(['get', 'post'], '/addklass', ['as' => 'addklass', 'uses' => 'App\Http\Controllers\admintestController@addklass']);//обновляем классы
+Route::match(['get', 'post'], '/delklass', ['as' => 'delklass', 'uses' => 'App\Http\Controllers\admintestController@delklass']);//обновляем классы

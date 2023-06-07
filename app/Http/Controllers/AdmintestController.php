@@ -22,10 +22,18 @@ class admintestController extends Controller
     {
         $this->middleware('auth');
     }
+    public function delklass(Request $request){
+        $rezult = Klass::destroy($request->klassid);
+        $url_dat = [
+            "school" => $rezult,
+        ];
+        return ($url_dat);
+    }
     public function updateadmin(Request $request)
     {
-        $klass = Klass::all();
-        $school = School::all();
+        $klass = Klass::orderBy('nameklass', 'asc')->get();
+        //->orderBy('t_numer', 'desc')all();
+        $school = School::orderBy('nameschool', 'asc')->get();
         $url_dat = [
             'klass' => $klass,
             "school" => $school,
@@ -42,7 +50,7 @@ class admintestController extends Controller
         ];
         return ($url_dat);
     }
-    public function addschool(Request $request)//добавляем школу
+    public function addschool(Request $request) //добавляем школу
     {
         $rezult = School::create(['nameschool' => $request->inputschool]);
         $url_dat = [
@@ -50,30 +58,49 @@ class admintestController extends Controller
         ];
         return ($url_dat);
     }
-    public function delschool(Request $request){// удаляем школу
+    public function delschool(Request $request)
+    { // удаляем школу
         $rezult = School::destroy($request->schoolid);
         $url_dat = [
             "school" => $rezult,
         ];
         return ($url_dat);
-
     }
-    public function filtrklass(Request $request){
-        $rezult = Klass::where('school_id',$request->schoolid)->get();
+    public function filtrklass(Request $request)
+    {
+        $rezult = Klass::where('school_id', $request->schoolid)->get();
         $url_dat = [
             "klass" => $rezult,
-            ];
+        ];
         return ($url_dat);
-
     }
-    public function updateklass(Request $request){
+    public function updateklass(Request $request)
+    {
         $rezult = Klass::where('id', $request->klassid)->update(['nameklass' => $request->inputklass]);
+        if ($rezult == 0) {
+            $mess = "Такого класса нет. необходимо выбрать из списка.";
+        } else {
+            $mess = "Обновил имя класса.";
+        }
         $url_dat = [
-            "klass" => "Обновил класс.",
+            "klass" =>  $mess,
+            "result" => $rezult,
+
         ];
         return ($url_dat);
         //inputklass: this.inputklass,
         //klassid: this.klassid,
 
+    }
+    public function addklass(Request $request)
+    {
+        $rezult = Klass::create(
+            ['nameklass' => $request->inputklass,
+            'school_id' => $request->schoolid],//`school_id`
+        );
+        $url_dat = [
+            "klass" => $rezult,
+        ];
+        return ($url_dat);
     }
 }
