@@ -4,13 +4,7 @@
       <!-- Кнопка-триггер модального окна -->
 
       <!-- Модальное окно школы-->
-      <div
-        class="modal fade"
-        id="exampleModal"
-        tabindex="-1"
-        aria-labelledby="exampleModalLabel"
-        aria-hidden="true"
-      >
+      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
             <div v-if="error != ''" class="container">
@@ -24,45 +18,23 @@
               <h5 class="modal-title" id="exampleModalLabel">
                 Редактировать таблицу школы
               </h5>
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Закрыть"
-              ></button>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
             </div>
             <div class="modal-body">
-              <input
-                v-model="inputschool"
-                class="form-control form-control-sm"
-                type="text"
-                placeholder="Необходимо выбрать школу. При редактировании"
-              />
+              <input v-model="inputschool" class="form-control form-control-sm" type="text"
+                placeholder="Необходимо выбрать школу. При редактировании" />
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-danger" @click="delschool()">
                 Удалить школу
               </button>
-              <button
-                type="button"
-                class="btn btn-primary"
-                @click="addschool()"
-              >
+              <button type="button" class="btn btn-primary" @click="addschool()">
                 Добавть школу
               </button>
-              <button
-                type="button"
-                class="btn btn-primary"
-                @click="updateschool()"
-              >
+              <button type="button" class="btn btn-primary" @click="updateschool()">
                 Сохранить изменения
               </button>
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-bs-dismiss="modal"
-                @click="clearschool()"
-              >
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @click="clearschool()">
                 Закрыть
               </button>
             </div>
@@ -70,13 +42,7 @@
         </div>
       </div>
       <!-- Модальное окно класс-->
-      <div
-        class="modal fade"
-        id="exampleModalKl"
-        tabindex="-1"
-        aria-labelledby="exampleModalLabelKl"
-        aria-hidden="true"
-      >
+      <div class="modal fade" id="exampleModalKl" tabindex="-1" aria-labelledby="exampleModalLabelKl" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
             <div v-if="errorklass != ''" class="container">
@@ -90,20 +56,16 @@
               <h5 class="modal-title" id="exampleModalLabelKl">
                 Редактировать классы
               </h5>
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Закрыть"
-              ></button>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
             </div>
             <div class="modal-body">
-              <input
-                v-model="inputklass"
-                class="form-control form-control-sm"
-                type="text"
-                placeholder="Необходимо выбрать класс. При редактировании"
-              />
+              <select v-model="selectedshkl">
+                <option :value="school" v-for="school in all_school" :key="school.id">
+                  {{ school.nameschool }}
+                </option>
+              </select>
+              <input v-model="inputklass" class="form-control form-control-sm" type="text"
+                placeholder="Необходимо выбрать класс. При редактировании" />
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-danger" @click="delklass()">
@@ -112,19 +74,10 @@
               <button type="button" class="btn btn-primary" @click="addklass()">
                 Добавть класс
               </button>
-              <button
-                type="button"
-                class="btn btn-primary"
-                @click="updateklass()"
-              >
+              <button type="button" class="btn btn-primary" @click="updateklass()">
                 Сохранить изменения
               </button>
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-bs-dismiss="modal"
-                @click="clearklass()"
-              >
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @click="clearklass()">
                 Закрыть
               </button>
             </div>
@@ -139,21 +92,12 @@
             <div class="container">
               <div class="row">
                 <div class="col-sm">
-                  <button
-                    type="button"
-                    class="btn btn-success"
-                    data-bs-toggle="modal"
-                    data-bs-target="#exampleModal"
-                    @click="editschool()"
-                  >
+                  <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                    @click="editschool()">
                     Редактировать школу
                   </button>
                   <select v-model="selected" @mouseup="filtrklass()">
-                    <option
-                      :value="school"
-                      v-for="school in all_school"
-                      :key="school.id"
-                    >
+                    <option :value="school" v-for="school in all_school" :key="school.id">
                       {{ school.nameschool }}
                     </option>
                   </select>
@@ -166,11 +110,7 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr
-                        scope="row"
-                        v-for="(school, index) in all_school"
-                        :key="school.id"
-                      >
+                      <tr scope="row" v-for="(school, index) in all_school" :key="school.id">
                         <th>{{ index + 1 }}</th>
                         <td>
                           {{ school.nameschool }}
@@ -180,21 +120,12 @@
                   </table>
                 </div>
                 <div class="col-sm">
-                  <button
-                    type="button"
-                    class="btn btn-success"
-                    data-bs-toggle="modal"
-                    data-bs-target="#exampleModalKl"
-                    @click="editklass()"
-                  >
+                  <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModalKl"
+                    @click="editklass()">
                     Редактировать класс
                   </button>
                   <select v-model="selected_klass">
-                    <option
-                      :value="klass"
-                      v-for="klass in all_klass"
-                      :key="klass.id"
-                    >
+                    <option :value="klass" v-for="klass in all_klass" :key="klass.id">
                       {{ klass.nameklass }}
                     </option>
                   </select>
@@ -206,11 +137,7 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr
-                        scope="row"
-                        v-for="(klass, index) in all_klass"
-                        :key="klass.id"
-                      >
+                      <tr scope="row" v-for="(klass, index) in all_klass" :key="klass.id">
                         <th>{{ index + 1 }}</th>
                         <td>
                           {{ klass.nameklass }}
@@ -237,6 +164,7 @@ export default {
       all_klass: [],
       selected: "",
       selected_klass: [],
+      selectedshkl: [],
       inputschool: "",
       klassid: "",
       klassname: "",
@@ -286,8 +214,8 @@ export default {
       this.klassname = "";
       this.inputklass = "";
       this.errorklass = "";
-      this.nameklass="";
-      this.selected_klass="";
+      this.nameklass = "";
+      this.selected_klass = "";
     },
     filtrklass: function () {
       //фильтруем классы
@@ -299,6 +227,27 @@ export default {
       axios.post("/filtrklass", data_updat).then((response) => {
         this.all_klass = response.data.klass;
       });
+    },
+    addklass: function () {
+      //добавление школы
+      console.log(this.selectedshkl.nameschool);
+      if (this.selectedshkl.nameschool != "undefined" ) {
+        this.errorklass = "Необходимо написать название класса или выбрать школу";
+        console.log("iiiii");
+      } else {
+        // const data_add = {
+        //   // передаем данные
+        //   schoolid: this.selected.id,
+        // };
+        // axios.post("/addschool", data_add).then((response) => {
+        //   //this.all_school = response.data.school;
+        //   console.log(response.data);
+        // });
+        // this.clearschool();
+        // this.update();
+        // this.error = "Школа добавлена.";
+        console.log("0000000");
+      }
     },
     updateschool: function (school_id) {
       //обновление названия школы
