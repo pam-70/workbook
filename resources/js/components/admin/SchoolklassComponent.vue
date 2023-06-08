@@ -140,6 +140,7 @@
           </div>
         </div>
       </div>
+      <!-- Модальное окно класс-->
 
       <div class="col-md-12">
         <div class="card">
@@ -329,9 +330,11 @@ export default {
         // передаем данные
         schoolid: this.selected.id,
       };
+      if(this.selected.id>0){
       axios.post("/filtrklass", data_updat).then((response) => {
         this.all_klass = response.data.klass;
       });
+    };
     },
     addklass: function () {
       //добавление класса

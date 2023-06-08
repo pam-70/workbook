@@ -18,16 +18,85 @@ use Illuminate\Http\Request;
 
 class PerenosController extends Controller
 {
-    public function perenos()
+    public function perenos() //перенос классов  id usera
     {
-        $idstr = School::all();
+        $sh = School::all();
+        $result = Result::all();
+        $kl=Klass::all();
+        foreach($result as $result_v){
+            foreach($kl as $kl_v){
+                if($kl_v->school_id===$result_v->school_id && trim($kl_v->nameklass)===$result_v->klass){
+                    $rezult = User::where('id', $result_v->id)->update(['klass_id' => $kl_v->id]);
+                    echo($result_v->school. " ----". $result_v->school_id. " -----". $result_v->klass."---".$kl_v->id."<br>");
+                }            
+            }         
+            
+           // echo($user_v->name."<br>");
+         }
        
-       dd($idstr->klass);
-//        Метод whereBetween() проверяет, что значения столбца находится в указанном интервале:
+       dd($sh);
 
-// $users = DB::table('users')
-//                     ->whereBetween('votes', [1, 100])->get();
+    }
+    public function perenos13()// перенос id школл в таблицу результатов
+    {
+        $sh = School::all();
+        $result = Result::all();
+        $kl=Klass::all();
 
+        foreach($sh as $sh_v){
+           echo($sh_v->nameschool."<br>");
+        }
+        foreach($result as $result_v){
+            foreach($sh as $sh_v){
+               // echo($sh_v->nameschool."<br>");
+                if($result_v->school===$sh_v->nameschool){
+                    $rezult = Result::where('id', $result_v->id)->update(['school_id' => $sh_v->id]);
+                    echo($result_v->name."------".$result_v->school."<br>");
+                }
+             }            
+           // echo($user_v->name."<br>");
+         }       
+       dd($sh);
+    }
+    public function perenos12() //перенос классов  id usera
+    {
+        $sh = School::all();
+        $user = User::all();
+        $kl=Klass::all();
+        foreach($user as $user_v){
+            foreach($kl as $kl_v){
+                if($kl_v->school_id===$user_v->school_id && trim($kl_v->nameklass)===$user_v->klass){
+                    $rezult = User::where('id', $user_v->id)->update(['klass_id' => $kl_v->id]);
+                    echo($user_v->school. " ----". $user_v->school_id. " -----". $user_v->klass."---".$kl_v->id."<br>");
+                }            
+            }         
+            
+           // echo($user_v->name."<br>");
+         }
+       
+       dd($sh);
+
+    }
+    public function perenos11()// перенос id школл в тusera
+    {
+        $sh = School::all();
+        $user = User::all();
+        $kl=Klass::all();
+
+        foreach($sh as $sh_v){
+           echo($sh_v->nameschool."<br>");
+        }
+        foreach($user as $user_v){
+            foreach($sh as $sh_v){
+               // echo($sh_v->nameschool."<br>");
+                if($user_v->school===$sh_v->nameschool){
+                    $rezult = User::where('id', $user_v->id)->update(['school_id' => $sh_v->id]);
+                    echo($user_v->name."------".$user_v->school."<br>");
+                }
+             }            
+           // echo($user_v->name."<br>");
+         }       
+       dd($sh);
     }
     public function perenos10()
     { //подсчет правильных ответов
