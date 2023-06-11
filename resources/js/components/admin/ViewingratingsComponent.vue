@@ -21,10 +21,11 @@
                   </select>
                 </div>
                 <div class="col-sm-3">
-                  <input class="form-control form-control-sm" type="text" v-model="numerstudent" placeholder="Порядковый номер ученика"></input>
+                  <input class="form-control form-control-sm" type="text" v-model="numerstudent"
+                    placeholder="Порядковый номер ученика"></input>
                 </div>
                 <div class="col">
-                  <button type="button" class="btn btn-success"  @click="outputresults">Просмотреть</button>
+                  <button type="button" class="btn btn-success" @click="outputresults">Просмотреть</button>
                 </div>
               </div>
               <div class="row">
@@ -41,20 +42,18 @@
             </div>
 
 
-
-
-
-
-
           </div>
 
         </div>
 
         <div class="card-body">
 
-          <div class="col-md-2">
+          <div class="col-md-12">
             <div class="butv">
-              Вывод результатов
+              <span v-for="result in allresult" :key="result.message">
+                {{  " Ученик  "+ result.numer+" задание №"+result.t_numer +" отметка "+result.mark }}
+              </span>
+
             </div>
           </div>
         </div>
@@ -71,7 +70,8 @@ export default {
       all_klass: [],
       selected: "",
       selected_klass: "",
-      numerstudent:"",
+      numerstudent: "",
+      allresult: "",
     };
   },
   mounted() {
@@ -99,20 +99,25 @@ export default {
         });
       };
     },
-    outputresults: function(){// вывод результатов
-      console.log("pusk");
-      const data_updat = {
+    outputresults: function () {// вывод результатов
+      console.log("prosmotr");
+      const data_post = {
         // передаем данные
         schoolid: this.selected,
         numerstudent: this.numerstudent,
-        selected_klass: this.selected_klass,
+        klassid: this.selected_klass,
 
       };
-       if (this.selected > 0 && this.selected_klass>0) {
-      //   axios.post("/filtrklass", data_updat).then((response) => {
-      //     this.all_klass = response.data.klass;
-      //   });
-       };
+      if (this.selected > 0 && this.selected_klass > 0) {
+        axios.post("/showresult", data_post).then((response) => {
+          // this.all_klass = response.data.school;
+          this.allresult = response.data.result;
+          console.log(response.data.result);
+        });
+
+      };
+      console.log(this.selected);
+      console.log(this.selected_klass);
 
 
     },

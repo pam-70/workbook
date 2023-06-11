@@ -2430,7 +2430,8 @@ __webpack_require__.r(__webpack_exports__);
       all_klass: [],
       selected: "",
       selected_klass: "",
-      numerstudent: ""
+      numerstudent: "",
+      allresult: ""
     };
   },
   mounted: function mounted() {
@@ -2463,20 +2464,25 @@ __webpack_require__.r(__webpack_exports__);
       ;
     },
     outputresults: function outputresults() {
+      var _this3 = this;
       // вывод результатов
-      console.log("pusk");
-      var data_updat = {
+      console.log("prosmotr");
+      var data_post = {
         // передаем данные
         schoolid: this.selected,
         numerstudent: this.numerstudent,
-        selected_klass: this.selected_klass
+        klassid: this.selected_klass
       };
       if (this.selected > 0 && this.selected_klass > 0) {
-        //   axios.post("/filtrklass", data_updat).then((response) => {
-        //     this.all_klass = response.data.klass;
-        //   });
+        axios.post("/showresult", data_post).then(function (response) {
+          // this.all_klass = response.data.school;
+          _this3.allresult = response.data.result;
+          console.log(response.data.result);
+        });
       }
       ;
+      console.log(this.selected);
+      console.log(this.selected_klass);
     }
   }
 });
@@ -2563,6 +2569,11 @@ __webpack_require__.r(__webpack_exports__);
       // });
     },
     exit_user: function exit_user() {
+      // axios.post("/logout").then((response) => {
+      //   this.data_student = response.data;
+      // });
+
+      //logout
       this.$emit("exit_user");
       //this.$router.push('www.pamgm.ru')
     }
@@ -2849,8 +2860,10 @@ __webpack_require__.r(__webpack_exports__);
       this.formatdate();
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/updatestudent").then(function (response) {
         _this.data_student = response.data;
+        //console.log(response.data.klass);
       });
     },
+
     next: function next() {
       var _this2 = this;
       //следующий вопрос
@@ -4146,7 +4159,17 @@ var render = function render() {
     on: {
       click: _vm.outputresults
     }
-  }, [_vm._v("Просмотреть")])])]), _vm._v(" "), _vm._m(0)])])]), _vm._v(" "), _vm._m(1)])])]);
+  }, [_vm._v("Просмотреть")])])]), _vm._v(" "), _vm._m(0)])])]), _vm._v(" "), _c("div", {
+    staticClass: "card-body"
+  }, [_c("div", {
+    staticClass: "col-md-12"
+  }, [_c("div", {
+    staticClass: "butv"
+  }, _vm._l(_vm.allresult, function (result) {
+    return _c("span", {
+      key: result.message
+    }, [_vm._v("\n                " + _vm._s(" Ученик  " + result.numer + " задание №" + result.t_numer + " отметка " + result.mark) + "\n              ")]);
+  }), 0)])])])])]);
 };
 var staticRenderFns = [function () {
   var _vm = this,
@@ -4160,16 +4183,6 @@ var staticRenderFns = [function () {
   }, [_vm._v("\n                  2 of 3\n                ")]), _vm._v(" "), _c("div", {
     staticClass: "col"
   }, [_vm._v("\n                  3 of 3\n                ")])]);
-}, function () {
-  var _vm = this,
-    _c = _vm._self._c;
-  return _c("div", {
-    staticClass: "card-body"
-  }, [_c("div", {
-    staticClass: "col-md-2"
-  }, [_c("div", {
-    staticClass: "butv"
-  }, [_vm._v("\n              Вывод результатов\n            ")])])]);
 }];
 render._withStripped = true;
 

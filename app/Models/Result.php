@@ -13,9 +13,10 @@ class Result extends Model
     }
     use HasFactory;
     protected $fillable = [
-         'user_id', 't_numer','school','klass','numer','name','surname','mark'
+         'user_id', 't_numer','school','klass','numer','name','surname','mark','klass_id','school_id',
     ];
-                // $table->integer('user_id')->nullable();
+                // $table->integer('user_id')->nullable();                    'school_id'=>$school[0]["id"],
+                  
             // $table->string('t_numer')->nullable();//
             // $table->string('school')->nullable();
             // $table->string('klass')->nullable();

@@ -10,6 +10,7 @@ use App\Models\Resulquestion;
 use App\Models\Answer;
 use App\Models\Resulanswer;
 use App\Models\Instal;
+use App\Models\User;
 
 use Illuminate\Support\Facades\Auth;
 
@@ -215,14 +216,21 @@ class TestController extends Controller
                 $t_numer = $request->test_numer; // номер теста
 
                 $perv_quest = 1; //начинать с первого вопроса
+                $klass=User::find(Auth::user()->id)->klass_s;//получаем название класса
+                $school=User::find(Auth::user()->id)->school_s; //получаем название школы
 
                 $id_result = Result::create([
                     'user_id' => Auth::user()->id,
                     't_numer' => $t_numer,
-                    'school' => Auth::user()->school,
-                    'klass' => Auth::user()->klass,
+                    //'school' => Auth::user()->school,
+                    'school' => $school[0]["nameschool"],
+                   // 'klass' => Auth::user()->klass,
+                    'klass' => $klass[0]["nameklass"],
                     'numer' => Auth::user()->numer,
                     'name' => Auth::user()->name,
+                    'school_id'=>$school[0]["id"],
+                    'klass_id'=>$klass[0]["id"],
+
 
                 ]);
                 // echo ($id_result->id . "    =ID tebl Result <br>"); // айди записи для добавления в таблицу

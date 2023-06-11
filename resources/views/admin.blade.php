@@ -12,7 +12,7 @@
     <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Просмотр заданий</button>
     <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Школы классы</button>
     <button class="nav-link" id="nav-exit-tab" data-bs-toggle="tab" data-bs-target="#nav-exit" type="button" role="tab" aria-controls="nav-exit" aria-selected="false">99999999</button>
-  
+    <a href="/logout" class="btn btn-danger" role="button" >X</a> 
   </div>
 </nav>
 <div class="container">
@@ -22,7 +22,8 @@
     <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab"><viewingratings-component></viewingratings-component></div>
     <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">Просмотр заданий</div>
     <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab"><schoolklass-component></schoolklass-component></div>
-    <div class="tab-pane fade" id="nav-exit" role="tabpanel" aria-labelledby="nav-exit-tab">999999999999999</div>
+    <div class="tab-pane fade" id="nav-exit" role="tabpanel" aria-labelledby="nav-exit-tab">99990000</div>
+   
   </div>
 </div>
 

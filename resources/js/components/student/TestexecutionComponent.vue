@@ -106,6 +106,7 @@ export default {
       this.formatdate();
       axios.post("/updatestudent").then((response) => {
         this.data_student = response.data;
+        //console.log(response.data.klass);
       });
     },
     next: function () {

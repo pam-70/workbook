@@ -22,6 +22,22 @@ class admintestController extends Controller
     {
         $this->middleware('auth');
     }
+    public function showresult(Request $request){
+        $result=Result::where("school_id",$request->schoolid)
+        ->where("klass_id",$request->klassid)
+        ->get();
+
+        $url_dat = [
+            "result" => $result,
+        ];
+        return ($url_dat);
+
+    }
+
+    public function logout(){
+        Auth::logout();
+        return redirect('/');
+    }
     public function delklass(Request $request){
         $rezult = Klass::destroy($request->klassid);
         $url_dat = [

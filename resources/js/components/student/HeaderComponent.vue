@@ -54,6 +54,11 @@ export default {
       // });
     },
     exit_user: function () {
+      // axios.post("/logout").then((response) => {
+      //   this.data_student = response.data;
+      // });
+      
+      //logout
       this.$emit("exit_user");
       //this.$router.push('www.pamgm.ru')
     },

@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Klass;
+use App\Models\User;
+use App\Models\School;
 
 class HomeController extends Controller
 {
@@ -53,10 +56,16 @@ class HomeController extends Controller
     public function updatestudent(Request $request)
     {
         if ($request->isMethod('POST')) {
+
+            $klass=User::find(Auth::user()->id)->klass_s;
+            $school=User::find(Auth::user()->id)->school_s;
+
             $url_dat = [
                 'id' => Auth::user()->id,
-                'school' => Auth::user()->school,
-                'klass' => Auth::user()->klass,
+                'school' => $school[0]["nameschool"],
+                //'school' => Auth::user()->school,
+                'klass' => $klass[0]["nameklass"],
+                //'klass' => Auth::user()->klass,
                 'numer' => Auth::user()->numer,
                 'name' => Auth::user()->name,
                 'time' => 300,

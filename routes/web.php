@@ -49,4 +49,6 @@ Route::match(['get', 'post'], '/delschool', ['as' => 'delschool', 'uses' => 'App
 Route::match(['get', 'post'], '/filtrklass', ['as' => 'filtrklass', 'uses' => 'App\Http\Controllers\admintestController@filtrklass']);//фильтуем классы
 Route::match(['get', 'post'], '/updateklass', ['as' => 'updateklass', 'uses' => 'App\Http\Controllers\admintestController@updateklass']);//обновляем классы
 Route::match(['get', 'post'], '/addklass', ['as' => 'addklass', 'uses' => 'App\Http\Controllers\admintestController@addklass']);//обновляем классы
-Route::match(['get', 'post'], '/delklass', ['as' => 'delklass', 'uses' => 'App\Http\Controllers\admintestController@delklass']);//обновляем классы
+Route::match(['get', 'post'], '/logout', ['as' => 'logout', 'uses' => 'App\Http\Controllers\admintestController@logout']);//
+Route::match(['get', 'post'], '/showresult', ['as' => 'showresult', 'uses' => 'App\Http\Controllers\admintestController@showresult']);//запрос на результаты 
+
