@@ -18,7 +18,7 @@ use Illuminate\Http\Request;
 
 class PerenosController extends Controller
 {
-    public function perenos() //перенос классов  id usera
+    public function perenos14() //перенос классов  id usera
     {
         $sh = School::all();
         $result = Result::all();
@@ -37,7 +37,7 @@ class PerenosController extends Controller
        dd($sh);
 
     }
-    public function perenos13()// перенос id школл в таблицу результатов
+    public function perenos()// перенос id школл в таблицу результатов
     {
         $sh = School::all();
         $result = Result::all();

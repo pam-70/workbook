@@ -68,7 +68,7 @@ class admintestController extends Controller
     }
     public function filtrklass(Request $request)
     {
-        $rezult = Klass::where('school_id', $request->schoolid)->get();
+        $rezult = Klass::where('school_id', $request->schoolid)->orderBy('nameklass', 'asc')->get();
         $url_dat = [
             "klass" => $rezult,
         ];
