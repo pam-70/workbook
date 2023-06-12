@@ -22,9 +22,17 @@ class TestController extends Controller
     }
     public function resultview(Request $request)
     { //письменный ответ
+        //Диапазон дат весь год
+        $dt_n = date(Instal::find(3)->data_n);
+        $dt_k = date(Instal::find(6)->data_k);
+
+
+
+
         if ($request->isMethod('POST')) {
             if (empty($request->numer_testa)) {
-                $result = Result::where('user_id', Auth::user()->id)
+                $result = Result::whereBetween('updated_at', [$dt_n, $dt_k])
+                ->where('user_id', Auth::user()->id)
                     ->where('mark', "!=", "")
                     ->where('mark', "!=", "0")
                     ->orderBy('t_numer', 'asc')
@@ -32,7 +40,8 @@ class TestController extends Controller
                     ->orderBy('mark', 'desc')
                     ->get();
             } else {
-                $result = Result::where('t_numer', $request->numer_testa)
+                $result = Result::whereBetween('updated_at', [$dt_n, $dt_k])
+                ->where('t_numer', $request->numer_testa)
                     ->where('user_id', Auth::user()->id)
                     ->where('mark', "!=", "")
                     ->where('mark', "!=", "0")

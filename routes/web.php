@@ -51,4 +51,6 @@ Route::match(['get', 'post'], '/updateklass', ['as' => 'updateklass', 'uses' => 
 Route::match(['get', 'post'], '/addklass', ['as' => 'addklass', 'uses' => 'App\Http\Controllers\admintestController@addklass']);//обновляем классы
 Route::match(['get', 'post'], '/logout', ['as' => 'logout', 'uses' => 'App\Http\Controllers\admintestController@logout']);//
 Route::match(['get', 'post'], '/showresult', ['as' => 'showresult', 'uses' => 'App\Http\Controllers\admintestController@showresult']);//запрос на результаты 
+Route::match(['get', 'post'], '/alltest', ['as' => 'alltest', 'uses' => 'App\Http\Controllers\admintestController@alltest']);//запрос на просмотр тестов
+Route::match(['get', 'post'], '/allnumer', ['as' => 'allnumer', 'uses' => 'App\Http\Controllers\admintestController@allnumer']);//запрос какие номера сущуствуют
 

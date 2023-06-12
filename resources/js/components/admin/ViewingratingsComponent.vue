@@ -5,62 +5,128 @@
         <div class="card">
           <div class="card-header">Просмотр результатов учащихся</div>
           <div class="card-header">
-
             <div class="container">
               <div class="row">
                 <div class="col-sm-auto">
-                  <select id="selectschool" v-model="selected" @mouseup="filtrklass()">
-                    <option :value="school.id" v-for="school in all_school" :key="school.id">
+                  <select
+                    id="selectschool"
+                    v-model="selected"
+                    @mouseup="filtrklass()"
+                  >
+                    <option
+                      :value="school.id"
+                      v-for="school in all_school"
+                      :key="school.id"
+                    >
                       {{ school.nameschool }}
                     </option>
                   </select>
                   <select v-model="selected_klass">
-                    <option :value="klass.id" v-for="klass in all_klass" :key="klass.id">
+                    <option
+                      :value="klass.id"
+                      v-for="klass in all_klass"
+                      :key="klass.id"
+                    >
                       {{ klass.nameklass }}
                     </option>
                   </select>
                 </div>
-                <div class="col-sm-3">
-                  <input class="form-control form-control-sm" type="text" v-model="numerstudent"
-                    placeholder="Порядковый номер ученика"></input>
+                <div class="col-sm-2">
+                  <input
+                    class="form-control form-control-sm"
+                    type="text"
+                    v-model="numertest"
+                    placeholder="№ задания"
+                  />
+                </div>
+                <div class="col-sm-2">
+                  <input
+                    class="form-control form-control-sm"
+                    type="text"
+                    v-model="numerstudent"
+                    placeholder="№ ученика"
+                  />
                 </div>
                 <div class="col">
-                  <button type="button" class="btn btn-success" @click="outputresults">Просмотреть</button>
+                  <button
+                    type="button"
+                    class="btn btn-success"
+                    @click="outputresults"
+                  >
+                    Просмотреть
+                  </button>
                 </div>
               </div>
               <div class="row">
-                <div class="col">
-                  1 of 3
+                <div class="col-sm-2">
+                  <input type="checkbox" id="checkbox" v-model="checkedtest" />
+                  <label for="checkbox" v-if="checkedtest === false"
+                    >По ученикам</label
+                  >
+                  <label for="checkbox" v-if="checkedtest === true"
+                    >По номерам</label
+                  >
                 </div>
-                <div class="col">
-                  2 of 3
+                <div class="col-sm-6">
+                  <input type="radio" id="one" value="3" v-model="quarter" />
+                  <label for="one">Первая</label>
+
+                  <input type="radio" id="two" value="4" v-model="quarter" />
+                  <label for="two">Вторая</label>
+                  <input type="radio" id="one" value="5" v-model="quarter" />
+                  <label for="one">Третья</label>
+
+                  <input type="radio" id="two" value="6" v-model="quarter" />
+                  <label for="two">Четвертая</label>
+
+                  
                 </div>
-                <div class="col">
-                  3 of 3
-                </div>
+                <div class="col"> </div>
               </div>
             </div>
-
-
           </div>
-
         </div>
 
         <div class="card-body">
-
-          <div class="col-md-12">
-            <div class="butv">
-              <span v-for="result in allresult" :key="result.message">
-                {{  " Ученик  "+ result.numer+" задание №"+result.t_numer +" отметка "+result.mark }}
-              </span>
-
+          <div class="row">
+            <div class="col-md-11">
+              <div
+                class="butv"
+                v-for="result in allresult"
+                :key="result.message"
+              >
+                <span>
+                  {{
+                    " Ученик  " +
+                    result.numer +
+                    " задание №" +
+                    result.t_numer +
+                    " отметка (" +
+                    result.mark +
+                    ")   время " +
+                    new Date(result.updated_at).toLocaleString()
+                  }}
+                </span>
+              </div>
+            </div>
+            <div class="col-md-1">
+              <button
+                type="button"
+                class="btn btn-danger"
+                data-bs-toggle="tooltip"
+                data-bs-placement="top"
+                title="Очистить результаты"
+                @click="clearform()"
+              >
+                X
+              </button>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div></template>
+</template>
 
 <script>
 export default {
@@ -71,7 +137,10 @@ export default {
       selected: "",
       selected_klass: "",
       numerstudent: "",
+      numertest: "",
       allresult: "",
+      checkedtest: false,
+      quarter: "", //четверть
     };
   },
   mounted() {
@@ -97,28 +166,32 @@ export default {
         axios.post("/filtrklass", data_updat).then((response) => {
           this.all_klass = response.data.klass;
         });
-      };
+      }
     },
-    outputresults: function () {// вывод результатов
-      console.log("prosmotr");
+    outputresults: function () {
+      // вывод результатов
+      // console.log("prosmotr");
       const data_post = {
         // передаем данные
         schoolid: this.selected,
         numerstudent: this.numerstudent,
         klassid: this.selected_klass,
-
+        numertest: this.numertest,
+        checkedtest: this.checkedtest,
+        quarter: this.quarter,
       };
       if (this.selected > 0 && this.selected_klass > 0) {
         axios.post("/showresult", data_post).then((response) => {
           // this.all_klass = response.data.school;
           this.allresult = response.data.result;
-          console.log(response.data.result);
+          //console.log(response.data.result);
         });
-
-      };
-      console.log(this.selected);
-      console.log(this.selected_klass);
-
+      }
+     // console.log(this.quarter);
+      //console.log(this.selected_klass);
+    },
+    clearform: function(){
+      this.allresult="";
 
     },
   },

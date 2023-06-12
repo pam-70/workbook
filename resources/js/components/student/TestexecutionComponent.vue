@@ -273,6 +273,10 @@ export default {
       this.formatted = "00:00";
       this.numer_quest = 0;
       //this.numer_testa = 0;
+      this.answer_test= [];
+      this.pict="";
+      this.quest="";
+      this.numer_testa="";
       clearInterval(this.polling);
       //console.log("STOP TIME"); //здесь остановка выполнения теста подсчет заданий
 
@@ -294,6 +298,7 @@ export default {
       this.formkontrol = 0;
       this.mark = "";
       this.prozent = "";
+      this.all_result= [];
     },
     analiz: function () {
       if (this.counter < 1) {
