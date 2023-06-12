@@ -19,3 +19,9 @@ git push
 composer update   
 php artisan key:generate
 npm update
+------------------------------------------------------
+git branch <название_ветки>
+
+#или вот так
+
+git checkout -b <название_ветки>
