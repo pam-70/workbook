@@ -22,6 +22,32 @@ class admintestController extends Controller
     {
         $this->middleware('auth');
     }
+    public function saveinstal(Request $request){
+
+
+        $result=Instal::where('id', $request->id)
+        ->update([
+            'data'=>$request->konst,
+            'data_n'=>$request->d_n,
+            'data_k'=>$request->d_k,
+        ]);
+
+        $url_dat = [
+            "result" => $result,
+        ];
+        return ($url_dat);
+
+
+    }
+    public function updateinstall(Request $request){
+        $instal=Instal::all();
+
+        $url_dat = [
+            "instal" => $instal,
+        ];
+        return ($url_dat);
+
+    }
     public function allnumer(Request $request)
     {
         $result = Question::select('t_numer')

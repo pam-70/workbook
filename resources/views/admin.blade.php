@@ -24,7 +24,7 @@
     <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab"><viewingratings-component></viewingratings-component></div>
     <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab"><viewingtasks-component></viewingtasks-component></div>
     <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab"><schoolklass-component></schoolklass-component></div>
-    <div class="tab-pane fade" id="nav-install" role="tabpanel" aria-labelledby="nav-installtab">INSTALL</div>
+    <div class="tab-pane fade" id="nav-install" role="tabpanel" aria-labelledby="nav-installtab"><installbaza-component></installbaza-component></div>
     <div class="tab-pane fade" id="nav-adds" role="tabpanel" aria-labelledby="nav-exit-tab">Добавить учеников</div>
     <div class="tab-pane fade" id="nav-addts" role="tabpanel" aria-labelledby="nav-exit-tab">Добавить задания</div>
    

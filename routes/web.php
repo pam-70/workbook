@@ -53,4 +53,6 @@ Route::match(['get', 'post'], '/logout', ['as' => 'logout', 'uses' => 'App\Http\
 Route::match(['get', 'post'], '/showresult', ['as' => 'showresult', 'uses' => 'App\Http\Controllers\admintestController@showresult']);//запрос на результаты 
 Route::match(['get', 'post'], '/alltest', ['as' => 'alltest', 'uses' => 'App\Http\Controllers\admintestController@alltest']);//запрос на просмотр тестов
 Route::match(['get', 'post'], '/allnumer', ['as' => 'allnumer', 'uses' => 'App\Http\Controllers\admintestController@allnumer']);//запрос какие номера сущуствуют
+Route::match(['get', 'post'], '/updateinstall', ['as' => 'updateinstall', 'uses' => 'App\Http\Controllers\admintestController@updateinstall']);//запрос базы установок
+Route::match(['get', 'post'], '/saveinstal', ['as' => 'saveinstal', 'uses' => 'App\Http\Controllers\admintestController@saveinstal']);//сохранить изменения в базе инсталл
 

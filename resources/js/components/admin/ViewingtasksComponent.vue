@@ -3,7 +3,7 @@
     <div class="row justify-content-center">
       <div class="col-md-12">
         <div class="card">
-          <div class="card-header">Просмотр результатов учащихся</div>
+          <div class="card-header">Просмотр базы вопросов и отдельных заданий</div>
           <div class="card-header">
             <div class="container">
               <div class="row">
