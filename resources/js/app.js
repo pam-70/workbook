@@ -39,6 +39,7 @@ Vue.component('viewingratings-component', require('./components/admin/Viewingrat
 Vue.component('schoolklass-component', require('./components/admin/SchoolklassComponent.vue').default);//школы класс
 Vue.component('viewingtasks-component', require('./components/admin/ViewingtasksComponent.vue').default);//просмотр тестов заданий
 Vue.component('installbaza-component', require('./components/admin/InstallbazaComponent.vue').default);//установки работы
+Vue.component('addstudent-component', require('./components/admin/AddstudentComponent.vue').default);//Добавить студентов
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

@@ -55,4 +55,7 @@ Route::match(['get', 'post'], '/alltest', ['as' => 'alltest', 'uses' => 'App\Htt
 Route::match(['get', 'post'], '/allnumer', ['as' => 'allnumer', 'uses' => 'App\Http\Controllers\admintestController@allnumer']);//запрос какие номера сущуствуют
 Route::match(['get', 'post'], '/updateinstall', ['as' => 'updateinstall', 'uses' => 'App\Http\Controllers\admintestController@updateinstall']);//запрос базы установок
 Route::match(['get', 'post'], '/saveinstal', ['as' => 'saveinstal', 'uses' => 'App\Http\Controllers\admintestController@saveinstal']);//сохранить изменения в базе инсталл
+Route::match(['get', 'post'], '/addstudent', ['as' => 'addstudent', 'uses' => 'App\Http\Controllers\admintestController@addstudent']);//добавить судентов в базу
+Route::match(['get', 'post'], '/filtrpass', ['as' => 'filtrpass', 'uses' => 'App\Http\Controllers\admintestController@filtrpass']);//вывод логинов и паролей
+
 

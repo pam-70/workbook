@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\School;
 use App\Models\Klass;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 use App\Models\Question;
 use App\Models\Result;
@@ -22,40 +24,98 @@ class admintestController extends Controller
     {
         $this->middleware('auth');
     }
-    public function saveinstal(Request $request){
-
-
-        $result=Instal::where('id', $request->id)
-        ->update([
-            'data'=>$request->konst,
-            'data_n'=>$request->d_n,
-            'data_k'=>$request->d_k,
-        ]);
-
+    public function filtrpass (Request $request){
+        $result = User::where('klass_id', $request->klassid)
+        ->orderBy("numer","asc")
+        ->get();
+       
+       
         $url_dat = [
             "result" => $result,
         ];
         return ($url_dat);
 
-
     }
-    public function updateinstall(Request $request){
-        $instal=Instal::all();
+    public function addstudent(Request $request)
+    {
+        $url_dat = [
+            "result" => "777",
+        ];
+        return ($url_dat);
+
+    //     // $t1=rand(1000,10000) . "\n";
+    //     //$t2=rand(1000,10000) . "\n";
+    //     $ar1 = [];
+    //     for ($t = 0; $t < 1000; $t++) {
+    //         $login = (string)rand(1000, 10000) . "=" . (string)rand(1000, 10000) . "=" . (string)rand(1000, 10000);
+    //         $pasw = (string)rand(10000, 100000);
+    //         //$paswmd = Hash::make($pasw);
+    //         $ar1[] = $login;
+    //     }
+    //     $ar2 = $ar1;
+    //     $n = count($ar2);
+    //     for ($t = 0; $t < $n; $t++) {
+    //         $sr=0;
+    //         for ($v = 0; $v < $n; $v++) {
+    //             if ($ar2[$t] === $ar1[$v] && $sr>1) {
+    //                 echo $ar2[$t]."<br>";
+    //                 $sr++;
+    //             }
+    //         }
+    //     }
+
+
+
+
+
+
+    //    // dd($ar2);
+    //     //  echo $login . " пароль " . $pasw . " HASH= " . $paswmd;
+
+
+    //     $fio = array("Петрович", "Вольдемарыч", "Сансаныч");
+    //     $n = count($fio);
+    //     $a = 1;
+    //     for ($t = 0; $t < $n; $t++) {
+    //         echo $fio[$t] . "<br>";
+    //         if ($t == $a) {
+    //             echo "<b>Попался, Вольдемарыч </b>" . "<br>";
+    //         }
+    //     }
+    }
+    public function saveinstal(Request $request)
+    {
+
+
+        $result = Instal::where('id', $request->id)
+            ->update([
+                'data' => $request->konst,
+                'data_n' => $request->d_n,
+                'data_k' => $request->d_k,
+            ]);
+
+        $url_dat = [
+            "result" => $result,
+        ];
+        return ($url_dat);
+    }
+    public function updateinstall(Request $request)
+    {
+        $instal = Instal::all();
 
         $url_dat = [
             "instal" => $instal,
         ];
         return ($url_dat);
-
     }
     public function allnumer(Request $request)
     {
         $result = Question::select('t_numer')
             ->distinct()->orderBy('t_numer', 'asc')->get();
-            $url_dat = [
-                "result" => $result,
-            ];
-            return ($url_dat);
+        $url_dat = [
+            "result" => $result,
+        ];
+        return ($url_dat);
     }
 
     public function alltest(Request $request)
@@ -178,6 +238,7 @@ class admintestController extends Controller
         $url_dat = [
             'klass' => $klass,
             "school" => $school,
+            "password"=>"778611",
         ];
         return ($url_dat);
     }
