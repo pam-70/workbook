@@ -2205,12 +2205,16 @@ __webpack_require__.r(__webpack_exports__);
       selected: "",
       selected_klass: "",
       kolstudent: "",
-      password: "",
+      password: " ",
       password_str: "",
       user_data: "",
       allresult: "",
       checkedtest: false,
-      quarter: "" //четверть
+      quarter: "",
+      //четверть
+      checkeddel: false,
+      school_name: "",
+      klass_name: ""
     };
   },
   mounted: function mounted() {
@@ -2220,40 +2224,54 @@ __webpack_require__.r(__webpack_exports__);
     update: function update() {
       var _this = this;
       //получить данные об usere
-      //console.log("0000000000000000");
-      // this.formatdate();
+
       axios.post("/updateadmin").then(function (response) {
         _this.all_school = response.data.school;
         _this.password_str = response.data.password;
-
-        //console.log(response.data);
       });
     },
-
-    filtrpassw: function filtrpassw(klass_id) {
+    deluser: function deluser() {
       var _this2 = this;
       var data_url = {
         // передаем данные
-        klassid: this.selected_klass
+        klassid: this.selected_klass,
+        selected: this.selected,
+        checkeddel: this.checkeddel
       };
-      console.log(this.selected_klass);
+      if (this.selected > 0 && this.selected_klass > 0 && this.checkeddel == true && this.password === this.password_str) {
+        axios.post("/deluser", data_url).then(function (response) {
+          _this2.user_data = response.data.result;
+        });
+        this.filtrpassw();
+        this.checkedtest = false;
+        this.password_str = "";
+      }
+    },
+    filtrpassw: function filtrpassw(klass_id) {
+      var _this3 = this;
+      var data_url = {
+        // передаем данные
+        klassid: this.selected_klass,
+        schoolid: this.selected
+      };
       if (this.selected > 0 && this.selected_klass > 0) {
         axios.post("/filtrpass", data_url).then(function (response) {
-          _this2.user_data = response.data.result;
+          _this3.user_data = response.data.result;
+          _this3.school_name = response.data.school_name;
+          _this3.klass_name = response.data.klass_name;
         });
       }
     },
     filtrklass: function filtrklass() {
-      var _this3 = this;
+      var _this4 = this;
       //фильтруем классы
       var data_updat = {
         // передаем данные
         schoolid: this.selected
       };
-      // console.log(this.selected);
       if (this.selected > 0) {
         axios.post("/filtrklass", data_updat).then(function (response) {
-          _this3.all_klass = response.data.klass;
+          _this4.all_klass = response.data.klass;
         });
       }
     },
@@ -2268,13 +2286,150 @@ __webpack_require__.r(__webpack_exports__);
           klassid: this.selected_klass,
           kolstudent: this.kolstudent
         };
-        // console.log("oooooooooooooooo");
-        axios.post("/addstudent", data_addst).then(function (response) {
-          //this.all_klass = response.data.klass;
-          console.log(response.data.result);
+        axios.post("/addstudent", data_addst).then(function (response) {});
+      }
+      this.filtrpassw();
+      this.password = "";
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/AddtaskComponent.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/AddtaskComponent.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      allresult: "",
+      //----------------
+      vid: "3",
+      labels: ["", "", "", ""],
+      inputtext: ["", "", "", ""],
+      checked: [false, false, false, false],
+      numertest: "",
+      pict: "",
+      quest: "",
+      answer: "",
+      quest_id: "",
+      show_r: false
+    };
+  },
+  mounted: function mounted() {
+    this.update();
+  },
+  methods: {
+    update: function update() {
+      //получить данные об usere
+      //  console.log("9999");
+    },
+    news: function news() {
+      if (this.quest_id > 0) {} else {
+        this.labels = ["", "", "", ""];
+        this.inputtext = ["", "", "", ""];
+        this.checked = [false, false, false, false];
+      }
+    },
+    editquest: function editquest() {
+      if (this.quest_id > 0) {
+        var data_url = {
+          // передаем данные
+          checked: this.checked,
+          inputtext: this.inputtext,
+          numertest: this.numertest,
+          pict: this.pict,
+          quest: this.quest,
+          answer: this.answer,
+          vid: this.vid,
+          quest_id: this.quest_id,
+          answer_id: this.labels
+        };
+        this.clearform();
+        if (this.numertest > 0 && this.quest_id > 0) {
+          axios.post("/editquest", data_url).then(function (response) {});
+        }
+        // this.watchquest();
+      }
+    },
+
+    delquest: function delquest() {
+      var data_url = {
+        // передаем данные
+        quest_id: this.quest_id,
+        vid: this.vid
+      };
+      // this.inputtext = [];
+      // this.checked = [];
+      if (this.quest_id > 0) {
+        axios.post("/delquest", data_url).then(function (response) {});
+        this.clearform();
+      }
+    },
+    watchquest: function watchquest() {
+      var _this = this;
+      var data_url = {
+        // передаем данные
+        quest_id: this.quest_id
+      };
+      this.inputtext = [];
+      this.checked = [];
+      if (this.quest_id > 0) {
+        axios.post("/watchquest", data_url).then(function (response) {
+          _this.numertest = response.data.quest.t_numer;
+          _this.pict = response.data.quest.pict;
+          _this.quest = response.data.quest.quest;
+          _this.answer = response.data.quest.right_ansv;
+          _this.vid = response.data.quest.vid;
+          _this.checked = response.data.checked;
+          _this.inputtext = response.data.inputtext;
+          _this.labels = response.data.labels;
         });
       }
-      this.password = "";
+    },
+    dellinput: function dellinput() {
+      this.labels.pop();
+      this.inputtext.pop();
+      this.checked.pop();
+    },
+    addinput: function addinput() {
+      this.labels.push("");
+      this.inputtext.push("");
+      this.checked.push(false);
+    },
+    addquest: function addquest() {
+      var data_url = {
+        // передаем данные
+        checked: this.checked,
+        inputtext: this.inputtext,
+        numertest: this.numertest,
+        pict: this.pict,
+        quest: this.quest,
+        answer: this.answer,
+        vid: this.vid
+      };
+      if (this.numertest > 0) {
+        axios.post("/addquest", data_url).then(function (response) {
+          //console.log(response.data.school);
+        });
+      }
+    },
+    clearform: function clearform() {
+      this.inputtext = [];
+      this.checked = [];
+      this.labels = [];
+      this.vid = 3;
+      this.pict = "";
+      this.quest = "";
+      this.answer = "";
+      this.quest_id = "";
+      this.numertest = "";
     }
   }
 });
@@ -2609,14 +2764,10 @@ __webpack_require__.r(__webpack_exports__);
     update: function update() {
       var _this = this;
       //получить данные об usere
-      //console.log("0000000000000000");
-      // this.formatdate();
       axios.post("/updateadmin").then(function (response) {
         _this.all_school = response.data.school;
-        //console.log(response.data);
       });
     },
-
     filtrklass: function filtrklass() {
       var _this2 = this;
       //фильтруем классы
@@ -2677,7 +2828,8 @@ __webpack_require__.r(__webpack_exports__);
       all_quest: [],
       numertest: "",
       put: "pict_test/",
-      all_test: ""
+      all_test: "",
+      exactly: false //точное совпадение номера задания
     };
   },
   mounted: function mounted() {
@@ -2696,7 +2848,8 @@ __webpack_require__.r(__webpack_exports__);
       // console.log("prosmotr");
       var data_post = {
         // передаем данные
-        numertest: this.numertest
+        numertest: this.numertest,
+        exactly: this.exactly
       };
       axios.post("/alltest", data_post).then(function (response) {
         _this.all_quest = response.data.result;
@@ -3904,8 +4057,64 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "card-header"
   }, [_vm._v("Страница добавления учащихся")]), _vm._v(" "), _c("div", {
-    staticClass: "card-header"
+    staticClass: "row"
   }, [_c("div", {
+    staticClass: "col-sm-2"
+  }), _vm._v(" "), _c("div", {
+    staticClass: "col-sm-6"
+  }, [_vm._v("\n            для удаления или добавления ввести пароль\n          ")]), _vm._v(" "), _c("div", {
+    staticClass: "col-sm-2"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.checkeddel,
+      expression: "checkeddel"
+    }],
+    attrs: {
+      type: "checkbox",
+      id: "checkbox"
+    },
+    domProps: {
+      checked: Array.isArray(_vm.checkeddel) ? _vm._i(_vm.checkeddel, null) > -1 : _vm.checkeddel
+    },
+    on: {
+      change: function change($event) {
+        var $$a = _vm.checkeddel,
+          $$el = $event.target,
+          $$c = $$el.checked ? true : false;
+        if (Array.isArray($$a)) {
+          var $$v = null,
+            $$i = _vm._i($$a, $$v);
+          if ($$el.checked) {
+            $$i < 0 && (_vm.checkeddel = $$a.concat([$$v]));
+          } else {
+            $$i > -1 && (_vm.checkeddel = $$a.slice(0, $$i).concat($$a.slice($$i + 1)));
+          }
+        } else {
+          _vm.checkeddel = $$c;
+        }
+      }
+    }
+  }), _vm._v(" "), _c("label", {
+    attrs: {
+      "for": "checkbox"
+    }
+  }, [_vm._v("Удалить класс")])]), _vm._v(" "), _c("div", {
+    staticClass: "col-sm-1"
+  }, [_c("button", {
+    staticClass: "btn btn-danger",
+    attrs: {
+      type: "button"
+    },
+    on: {
+      click: function click($event) {
+        return _vm.deluser();
+      }
+    }
+  }, [_vm._v("\n              Del\n            ")])]), _vm._v(" "), _c("div", {
+    staticClass: "col-sm-1"
+  })]), _vm._v(" "), _c("div", {
     staticClass: "container"
   }, [_c("div", {
     staticClass: "row"
@@ -3941,7 +4150,7 @@ var render = function render() {
       domProps: {
         value: school.id
       }
-    }, [_vm._v("\n                                        " + _vm._s(school.nameschool) + "\n                                    ")]);
+    }, [_vm._v("\n                  " + _vm._s(school.nameschool) + "\n                ")]);
   }), 0), _vm._v(" "), _c("select", {
     directives: [{
       name: "model",
@@ -3969,7 +4178,7 @@ var render = function render() {
       domProps: {
         value: klass.id
       }
-    }, [_vm._v("\n                                        " + _vm._s(klass.nameklass) + "\n                                    ")]);
+    }, [_vm._v("\n                  " + _vm._s(klass.nameklass) + "\n                ")]);
   }), 0)]), _vm._v(" "), _c("div", {
     staticClass: "col-sm-2"
   }, [_c("input", {
@@ -4026,7 +4235,7 @@ var render = function render() {
     on: {
       click: _vm.addstudent
     }
-  }, [_vm._v("\n                                    Добавить\n                                ")])])]), _vm._v(" "), _vm._m(0)])])]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n                Добавить\n              ")])])]), _vm._v(" "), _vm._m(0)])]), _vm._v(" "), _c("div", {
     staticClass: "card-body"
   }, [_c("div", {
     staticClass: "row"
@@ -4036,7 +4245,7 @@ var render = function render() {
     return _c("div", {
       key: result.message,
       staticClass: "butv"
-    }, [_c("span", [_vm._v("\n                                " + _vm._s(" Ученик логин № " + result.numer + " логин " + result.name + " пароль " + result.password_srtr) + "\n                            ")])]);
+    }, [_c("span", [_vm._v("\n                " + _vm._s(_vm.school_name + " кл " + _vm.klass_name + " " + " Ученик № " + result.numer + " логин " + result.name + " пароль " + result.password_srtr) + "\n              ")])]);
   }), 0), _vm._v(" "), _c("div", {
     staticClass: "col-md-1"
   }, [_c("button", {
@@ -4052,7 +4261,7 @@ var render = function render() {
         return _vm.clearform();
       }
     }
-  }, [_vm._v("\n                            X\n                        ")])])])])])])]);
+  }, [_vm._v("\n              X\n            ")])])])])])])]);
 };
 var staticRenderFns = [function () {
   var _vm = this,
@@ -4063,6 +4272,406 @@ var staticRenderFns = [function () {
     staticClass: "col-sm-2"
   }), _vm._v(" "), _c("div", {
     staticClass: "col"
+  })]);
+}];
+render._withStripped = true;
+
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/AddtaskComponent.vue?vue&type=template&id=1bc9953c&":
+/*!*******************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/AddtaskComponent.vue?vue&type=template&id=1bc9953c& ***!
+  \*******************************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function render() {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "container-fluid"
+  }, [_c("div", {
+    staticClass: "row justify-content-center"
+  }, [_c("div", {
+    staticClass: "col-md-12"
+  }, [_c("div", {
+    staticClass: "card"
+  }, [_c("div", {
+    staticClass: "card-header"
+  }, [_vm._v("\n          Страница добавления вопросов\n          "), _c("div", {
+    staticClass: "row"
+  }, [_c("div", {
+    staticClass: "form-group col-sm-2"
+  }, [_c("span", [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.numertest,
+      expression: "numertest"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "text",
+      placeholder: "№ задания"
+    },
+    domProps: {
+      value: _vm.numertest
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.numertest = $event.target.value;
+      }
+    }
+  })])]), _vm._v(" "), _c("div", {
+    staticClass: "form-group col-sm-2"
+  }, [_c("span", [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.pict,
+      expression: "pict"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "text",
+      placeholder: "Рисунок"
+    },
+    domProps: {
+      value: _vm.pict
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.pict = $event.target.value;
+      }
+    }
+  })])]), _vm._v(" "), _c("div", {
+    staticClass: "form-group col-sm-3"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.show_r,
+      expression: "show_r"
+    }],
+    attrs: {
+      type: "checkbox",
+      id: "checkbox"
+    },
+    domProps: {
+      checked: Array.isArray(_vm.show_r) ? _vm._i(_vm.show_r, null) > -1 : _vm.show_r
+    },
+    on: {
+      change: function change($event) {
+        var $$a = _vm.show_r,
+          $$el = $event.target,
+          $$c = $$el.checked ? true : false;
+        if (Array.isArray($$a)) {
+          var $$v = null,
+            $$i = _vm._i($$a, $$v);
+          if ($$el.checked) {
+            $$i < 0 && (_vm.show_r = $$a.concat([$$v]));
+          } else {
+            $$i > -1 && (_vm.show_r = $$a.slice(0, $$i).concat($$a.slice($$i + 1)));
+          }
+        } else {
+          _vm.show_r = $$c;
+        }
+      }
+    }
+  }), _vm._v(" "), _c("label", {
+    attrs: {
+      "for": "checkbox"
+    }
+  }, [_vm._v("Редактировать вопросы")])]), _vm._v(" "), _vm.show_r == true ? _c("div", {
+    staticClass: "form-group col-sm-2"
+  }, [_c("span", [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.quest_id,
+      expression: "quest_id"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "text",
+      placeholder: "id задания"
+    },
+    domProps: {
+      value: _vm.quest_id
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.quest_id = $event.target.value;
+      }
+    }
+  })])]) : _vm._e(), _vm._v(" "), _vm.show_r == true ? _c("div", {
+    staticClass: "form-group col-sm-3"
+  }, [_c("button", {
+    staticClass: "btn btn-primary",
+    attrs: {
+      type: "button"
+    },
+    on: {
+      click: _vm.watchquest
+    }
+  }, [_vm._v("\n                W\n              ")]), _vm._v(" "), _c("button", {
+    staticClass: "btn btn-primary",
+    attrs: {
+      type: "button"
+    },
+    on: {
+      click: _vm.editquest
+    }
+  }, [_vm._v("\n                S\n              ")]), _vm._v(" "), _c("button", {
+    staticClass: "btn btn-primary",
+    attrs: {
+      type: "button"
+    },
+    on: {
+      click: _vm.delquest
+    }
+  }, [_vm._v("\n                D\n              ")])]) : _vm._e()])]), _vm._v(" "), _c("div", {
+    staticClass: "card-header"
+  }, [_c("div", {
+    staticClass: "row"
+  }, [_c("div", {
+    staticClass: "form-group col-sm-12"
+  }, [_c("span", [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.quest,
+      expression: "quest"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "text",
+      placeholder: "Вопрос"
+    },
+    domProps: {
+      value: _vm.quest
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.quest = $event.target.value;
+      }
+    }
+  })])]), _vm._v(" "), _c("div", {
+    staticClass: "row"
+  }, [_c("div", {
+    staticClass: "form-group col-sm-4"
+  }, [this.vid == 3 ? _c("span", [_vm._v("Письменный ответ"), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.answer,
+      expression: "answer"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "text",
+      placeholder: "Ответ"
+    },
+    domProps: {
+      value: _vm.answer
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.answer = $event.target.value;
+      }
+    }
+  })]) : _vm._e()]), _vm._v(" "), _c("div", {
+    staticClass: "form-group col-sm-6"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.vid,
+      expression: "vid"
+    }],
+    attrs: {
+      type: "radio",
+      id: "two1",
+      value: "3"
+    },
+    domProps: {
+      checked: _vm._q(_vm.vid, "3")
+    },
+    on: {
+      click: _vm.news,
+      change: function change($event) {
+        _vm.vid = "3";
+      }
+    }
+  }), _vm._v(" "), _c("label", {
+    attrs: {
+      "for": "one"
+    }
+  }, [_vm._v("Письменный ответ")]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.vid,
+      expression: "vid"
+    }],
+    attrs: {
+      type: "radio",
+      id: "two2",
+      value: "2"
+    },
+    domProps: {
+      checked: _vm._q(_vm.vid, "2")
+    },
+    on: {
+      click: _vm.news,
+      change: function change($event) {
+        _vm.vid = "2";
+      }
+    }
+  }), _vm._v(" "), _c("label", {
+    attrs: {
+      "for": "two"
+    }
+  }, [_vm._v("Несколько")]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.vid,
+      expression: "vid"
+    }],
+    attrs: {
+      type: "radio",
+      id: "two3",
+      value: "1"
+    },
+    domProps: {
+      checked: _vm._q(_vm.vid, "1")
+    },
+    on: {
+      click: _vm.news,
+      change: function change($event) {
+        _vm.vid = "1";
+      }
+    }
+  }), _vm._v(" "), _c("label", {
+    attrs: {
+      "for": "two1"
+    }
+  }, [_vm._v("Один ответ")])]), _vm._v(" "), _c("div", {
+    staticClass: "form-group col-sm-2"
+  }, [_c("br"), _vm._v(" "), _c("button", {
+    staticClass: "btn btn-success",
+    attrs: {
+      type: "button"
+    },
+    on: {
+      click: _vm.addquest
+    }
+  }, [_vm._v("\n                  Добавить\n                ")])])])])])]), _vm._v(" "), this.vid != 3 ? _c("div", {
+    staticClass: "card-body"
+  }, [_c("div", {
+    staticClass: "row"
+  }, [_c("div", {
+    staticClass: "col-md-10"
+  }, _vm._l(_vm.labels, function (label, index) {
+    return _c("p", {
+      key: label.id
+    }, [_c("input", {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: _vm.checked[index],
+        expression: "checked[index]"
+      }],
+      attrs: {
+        type: "checkbox",
+        id: "checkbox"
+      },
+      domProps: {
+        checked: Array.isArray(_vm.checked[index]) ? _vm._i(_vm.checked[index], null) > -1 : _vm.checked[index]
+      },
+      on: {
+        change: function change($event) {
+          var $$a = _vm.checked[index],
+            $$el = $event.target,
+            $$c = $$el.checked ? true : false;
+          if (Array.isArray($$a)) {
+            var $$v = null,
+              $$i = _vm._i($$a, $$v);
+            if ($$el.checked) {
+              $$i < 0 && _vm.$set(_vm.checked, index, $$a.concat([$$v]));
+            } else {
+              $$i > -1 && _vm.$set(_vm.checked, index, $$a.slice(0, $$i).concat($$a.slice($$i + 1)));
+            }
+          } else {
+            _vm.$set(_vm.checked, index, $$c);
+          }
+        }
+      }
+    }), _vm._v("\n              Верный ответ\n              "), _c("input", {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: _vm.inputtext[index],
+        expression: "inputtext[index]"
+      }],
+      staticClass: "form-control form-control-sm",
+      attrs: {
+        type: "text",
+        placeholder: "Ответ"
+      },
+      domProps: {
+        value: _vm.inputtext[index]
+      },
+      on: {
+        input: function input($event) {
+          if ($event.target.composing) return;
+          _vm.$set(_vm.inputtext, index, $event.target.value);
+        }
+      }
+    })]);
+  }), 0), _vm._v(" "), _c("div", {
+    staticClass: "col-md-2"
+  }, [_c("button", {
+    staticClass: "btn btn-primary",
+    attrs: {
+      type: "button"
+    },
+    on: {
+      click: _vm.addinput
+    }
+  }, [_vm._v("\n              +\n            ")]), _vm._v(" "), _c("button", {
+    staticClass: "btn btn-danger",
+    attrs: {
+      type: "button",
+      "data-bs-toggle": "tooltip",
+      "data-bs-placement": "top",
+      title: "Очистить результаты"
+    },
+    on: {
+      click: _vm.dellinput
+    }
+  }, [_vm._v("\n              -\n            ")])]), _vm._v(" "), _vm._m(0)])]) : _vm._e()])])]);
+};
+var staticRenderFns = [function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "row"
+  }, [_c("div", {
+    staticClass: "form-group col-md-10"
+  }), _vm._v(" "), _c("div", {
+    staticClass: "form-group col-md-2"
   })]);
 }];
 render._withStripped = true;
@@ -4982,7 +5591,23 @@ var render = function render() {
     return _c("div", {
       key: result.message,
       staticClass: "butv"
-    }, [_c("span", [_vm._v("\n                " + _vm._s(" Ученик  " + result.numer + " задание №" + result.t_numer + " отметка (" + result.mark + ")   время " + new Date(result.updated_at).toLocaleString()) + "\n              ")])]);
+    }, [result.mark == 5 ? _c("span", [_c("font", {
+      attrs: {
+        color: "#B32821"
+      }
+    }, [_vm._v("\n                  " + _vm._s(" Ученик  " + result.numer + " задание №" + result.t_numer + " отметка (" + result.mark + ")   время " + new Date(result.updated_at).toLocaleString()) + "\n                ")])], 1) : _vm._e(), _vm._v(" "), result.mark == 4 ? _c("span", [_c("font", {
+      attrs: {
+        color: "#008000"
+      }
+    }, [_vm._v("\n                  " + _vm._s(" Ученик  " + result.numer + " задание №" + result.t_numer + " отметка (" + result.mark + ")   время " + new Date(result.updated_at).toLocaleString()) + "\n                ")])], 1) : _vm._e(), _vm._v(" "), result.mark == 3 ? _c("span", [_c("font", {
+      attrs: {
+        color: "#4169E1"
+      }
+    }, [_vm._v("\n                  " + _vm._s(" Ученик  " + result.numer + " задание №" + result.t_numer + " отметка (" + result.mark + ")   время " + new Date(result.updated_at).toLocaleString()) + "\n                ")])], 1) : _vm._e(), _vm._v(" "), result.mark == 2 ? _c("span", [_c("font", {
+      attrs: {
+        color: "#000000"
+      }
+    }, [_vm._v("\n                  " + _vm._s(" Ученик  " + result.numer + " задание №" + result.t_numer + " отметка (" + result.mark + ")   время " + new Date(result.updated_at).toLocaleString()) + "\n                ")])], 1) : _vm._e()]);
   }), 0), _vm._v(" "), _c("div", {
     staticClass: "col-md-1"
   }, [_c("button", {
@@ -5073,8 +5698,44 @@ var render = function render() {
         return _vm.alltest();
       }
     }
-  }, [_vm._v("\n                  Просмотреть\n                ")])]), _vm._v(" "), _c("div", {
-    staticClass: "col"
+  }, [_vm._v("\n                  Просмотреть\n                ")]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.exactly,
+      expression: "exactly"
+    }],
+    attrs: {
+      type: "checkbox",
+      id: "checkbox"
+    },
+    domProps: {
+      checked: Array.isArray(_vm.exactly) ? _vm._i(_vm.exactly, null) > -1 : _vm.exactly
+    },
+    on: {
+      change: function change($event) {
+        var $$a = _vm.exactly,
+          $$el = $event.target,
+          $$c = $$el.checked ? true : false;
+        if (Array.isArray($$a)) {
+          var $$v = null,
+            $$i = _vm._i($$a, $$v);
+          if ($$el.checked) {
+            $$i < 0 && (_vm.exactly = $$a.concat([$$v]));
+          } else {
+            $$i > -1 && (_vm.exactly = $$a.slice(0, $$i).concat($$a.slice($$i + 1)));
+          }
+        } else {
+          _vm.exactly = $$c;
+        }
+      }
+    }
+  }), _vm._v(" "), _c("label", {
+    attrs: {
+      "for": "checkbox"
+    }
+  }, [_vm._v("По первым цифрам")])]), _vm._v(" "), _c("div", {
+    staticClass: "col-sm"
   }, [_c("button", {
     staticClass: "btn btn-success",
     attrs: {
@@ -53512,6 +54173,7 @@ Vue.component('schoolklass-component', __webpack_require__(/*! ./components/admi
 Vue.component('viewingtasks-component', __webpack_require__(/*! ./components/admin/ViewingtasksComponent.vue */ "./resources/js/components/admin/ViewingtasksComponent.vue")["default"]); //просмотр тестов заданий
 Vue.component('installbaza-component', __webpack_require__(/*! ./components/admin/InstallbazaComponent.vue */ "./resources/js/components/admin/InstallbazaComponent.vue")["default"]); //установки работы
 Vue.component('addstudent-component', __webpack_require__(/*! ./components/admin/AddstudentComponent.vue */ "./resources/js/components/admin/AddstudentComponent.vue")["default"]); //Добавить студентов
+Vue.component('addtask-component', __webpack_require__(/*! ./components/admin/AddtaskComponent.vue */ "./resources/js/components/admin/AddtaskComponent.vue")["default"]); //Добавить вопросы теста
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -53845,6 +54507,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_AddstudentComponent_vue_vue_type_template_id_1742f388___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_AddstudentComponent_vue_vue_type_template_id_1742f388___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/AddtaskComponent.vue":
+/*!************************************************************!*\
+  !*** ./resources/js/components/admin/AddtaskComponent.vue ***!
+  \************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _AddtaskComponent_vue_vue_type_template_id_1bc9953c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AddtaskComponent.vue?vue&type=template&id=1bc9953c& */ "./resources/js/components/admin/AddtaskComponent.vue?vue&type=template&id=1bc9953c&");
+/* harmony import */ var _AddtaskComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AddtaskComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/admin/AddtaskComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _AddtaskComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _AddtaskComponent_vue_vue_type_template_id_1bc9953c___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _AddtaskComponent_vue_vue_type_template_id_1bc9953c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/admin/AddtaskComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/AddtaskComponent.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************!*\
+  !*** ./resources/js/components/admin/AddtaskComponent.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AddtaskComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./AddtaskComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/AddtaskComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AddtaskComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/AddtaskComponent.vue?vue&type=template&id=1bc9953c&":
+/*!*******************************************************************************************!*\
+  !*** ./resources/js/components/admin/AddtaskComponent.vue?vue&type=template&id=1bc9953c& ***!
+  \*******************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_AddtaskComponent_vue_vue_type_template_id_1bc9953c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!../../../../node_modules/vue-loader/lib??vue-loader-options!./AddtaskComponent.vue?vue&type=template&id=1bc9953c& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/AddtaskComponent.vue?vue&type=template&id=1bc9953c&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_AddtaskComponent_vue_vue_type_template_id_1bc9953c___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_AddtaskComponent_vue_vue_type_template_id_1bc9953c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -54903,8 +55634,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\LarProect\workbook\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\LarProect\workbook\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\LarProekt\workbook\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! D:\LarProekt\workbook\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

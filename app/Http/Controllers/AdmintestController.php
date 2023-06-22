@@ -24,64 +24,223 @@ class admintestController extends Controller
     {
         $this->middleware('auth');
     }
-    public function filtrpass (Request $request){
-        $result = User::where('klass_id', $request->klassid)
-        ->orderBy("numer","asc")
-        ->get();
-       
-       
+    public function delquest(Request $request)
+    {
+        //quest_id   vid
+        Question::find($request->quest_id)->delete();
+        if ($request->vid < 3) {
+            Answer::where("question_id", $request->quest_id)->delete();
+        }
         $url_dat = [
-            "result" => $result,
+            "quest" =>  "OK",
+
         ];
         return ($url_dat);
+    }
+    public function editquest(Request $request)
+    {
 
+        if (!empty($request->pict)) {
+            $pict =  $request->pict;
+        } else {
+            $pict = "";
+        }
+        //->update(['delayed' => 1]);
+        $quest_id = Question::where("id", $request->quest_id)
+            ->update([
+                'quest' => $request->quest,
+                't_numer' => $request->numertest,
+                'pict' => $pict,
+                'right_ansv' => $request->answer,
+                'vid' => $request->vid,
+            ]);
+        //answer_id
+        if ($request->vid < 3) {
+            $per = 0;
+            $checked = $request->checked;
+            $answer_id = $request->answer_id;
+            foreach ($request->inputtext as $inputtext) {
+                if ($checked[$per] === true) {
+                    $meaning = 1;
+                } else {
+                    $meaning = 0;
+                }
+                $an = Answer::where("id", $answer_id[$per])
+                    ->update([
+
+                        'answer' => $inputtext,
+                        'meaning' => $meaning,
+                    ]);
+                $per++;
+            }
+        }
+
+
+
+
+        $url_dat = [
+            "quest" =>  $request->checked,
+
+        ];
+        return ($url_dat);
+    }
+    public function watchquest(Request $request)
+    {
+        $quest = "";
+        $quest = Question::find($request->quest_id);
+        $ansv = "";
+        $checked = [];
+        $inputtext = [];
+        $id_answer = [];
+
+        if ($quest->vid < 3) {
+            $ansv = Answer::where('question_id', $request->quest_id)->get();
+            foreach ($ansv as $ansv_ar) {
+                if ($ansv_ar->meaning == 1) {
+                    $checked[] = true;
+                } else {
+                    $checked[] = false;
+                }
+
+                $inputtext[] = $ansv_ar->answer;
+                $id_answer[] = $ansv_ar->id;
+            }
+        }
+        //checked
+        // inputtext
+
+        $url_dat = [
+            "quest" => $quest,
+            // "checked" => $checked,
+            "checked" => $checked,
+            "inputtext" => $inputtext,
+            "labels" => $id_answer,
+        ];
+        return ($url_dat);
+    }
+    public function addquest(Request $request)
+    {
+        // checked: this.checked,
+        // inputtext: this.inputtext,
+        if (!empty($request->pict)) {
+            $pict = $request->numertest . "_" . $request->pict . ".jpg";
+        } else {
+            $pict = "";
+        }
+
+        $quest_id = Question::create([
+            'quest' => $request->quest,
+            't_numer' => $request->numertest,
+            'pict' => $pict,
+            'right_ansv' => $request->answer,
+            'vid' => $request->vid,
+        ]);
+
+        if ($request->vid < 3) {
+            $per = 0;
+            $checked = $request->checked;
+            foreach ($request->inputtext as $inputtext) {
+                $an = Answer::create([
+                    'question_id' => $quest_id->id,
+                    'answer' => $inputtext,
+                    'meaning' => $checked[$per],
+                ]);
+                $per++;
+            }
+        }
+        $url_dat = [
+            "school" => $quest_id->id,
+        ];
+        return ($url_dat);
+    }
+
+
+    public function deluser(Request $request) // удаление списка класса
+    {
+        $rezult = User::where('klass_id', $request->klassid)->delete();
+        $url_dat = [
+            "school" => $rezult,
+        ];
+        return ($url_dat);
+    }
+    public function filtrpass(Request $request)
+    {
+        $result = User::where('klass_id', $request->klassid)
+            ->orderBy("numer", "asc")
+            ->get();
+        // this.school_name=response.data.school_name;
+        // this.klass_name=response.data.klass_name;
+        $school_name = School::find($request->schoolid)->nameschool;
+        $klass_name = Klass::find($request->klassid)->nameklass;
+
+
+        $url_dat = [
+            "result" => $result,
+            "school_name" => $school_name,
+            "klass_name" => $klass_name,
+        ];
+        return ($url_dat);
     }
     public function addstudent(Request $request)
     {
+        $resukt = 0;
+        $resukt = User::where("school_id", $request->schoolid)
+            ->where("klass_id", $request->klassid)
+            ->max("numer");
+        // echo ($resukt . "<br>");
+
+        for ($i = $resukt + 1; $i <= $request->kolstudent + $resukt; $i++) {
+            $login = (string)rand(1000, 10000) . "=" . (string)rand(1000, 10000) . "=" . (string)rand(1000, 10000);
+            $pasw = (string)rand(10000, 100000);
+            $paswmd = Hash::make($pasw);
+
+
+            $res = User::create([
+                'name' => $login,
+                'password_srtr' => $pasw,
+                'password' => $paswmd,
+                "numer" => $i,
+                "school_id" => $request->schoolid,
+                "klass_id" => $request->klassid
+            ]);
+        }
+
         $url_dat = [
-            "result" => "777",
+            "result" => $res,
         ];
         return ($url_dat);
 
-    //     // $t1=rand(1000,10000) . "\n";
-    //     //$t2=rand(1000,10000) . "\n";
-    //     $ar1 = [];
-    //     for ($t = 0; $t < 1000; $t++) {
-    //         $login = (string)rand(1000, 10000) . "=" . (string)rand(1000, 10000) . "=" . (string)rand(1000, 10000);
-    //         $pasw = (string)rand(10000, 100000);
-    //         //$paswmd = Hash::make($pasw);
-    //         $ar1[] = $login;
-    //     }
-    //     $ar2 = $ar1;
-    //     $n = count($ar2);
-    //     for ($t = 0; $t < $n; $t++) {
-    //         $sr=0;
-    //         for ($v = 0; $v < $n; $v++) {
-    //             if ($ar2[$t] === $ar1[$v] && $sr>1) {
-    //                 echo $ar2[$t]."<br>";
-    //                 $sr++;
-    //             }
-    //         }
-    //     }
+
+        //     $ar2 = $ar1;
+        //     $n = count($ar2);
+        //     for ($t = 0; $t < $n; $t++) {
+        //         $sr=0;
+        //         for ($v = 0; $v < $n; $v++) {
+        //             if ($ar2[$t] === $ar1[$v] && $sr>1) {
+        //                 echo $ar2[$t]."<br>";
+        //                 $sr++;
+        //             }
+        //         }
+        //     }
 
 
 
 
 
 
-    //    // dd($ar2);
-    //     //  echo $login . " пароль " . $pasw . " HASH= " . $paswmd;
+        //    // dd($ar2);
+        //     //  echo $login . " пароль " . $pasw . " HASH= " . $paswmd;
 
 
-    //     $fio = array("Петрович", "Вольдемарыч", "Сансаныч");
-    //     $n = count($fio);
-    //     $a = 1;
-    //     for ($t = 0; $t < $n; $t++) {
-    //         echo $fio[$t] . "<br>";
-    //         if ($t == $a) {
-    //             echo "<b>Попался, Вольдемарыч </b>" . "<br>";
-    //         }
-    //     }
+        //     $fio = array("Петрович", "Вольдемарыч", "Сансаныч");
+        //     $n = count($fio);
+        //     $a = 1;
+        //     for ($t = 0; $t < $n; $t++) {
+        //         echo $fio[$t] . "<br>";
+        //         if ($t == $a) {
+        //             echo "<b>Попался, Вольдемарыч </b>" . "<br>";
+        //         }
+        //     }
     }
     public function saveinstal(Request $request)
     {
@@ -121,11 +280,19 @@ class admintestController extends Controller
     public function alltest(Request $request)
     { // просмотр результатов админа
         $result = $request->numertest;
-        $result = Question::with("answer")
-            // ->where("t_numer", $request->numertest)
-            ->where("t_numer", "like", $request->numertest . "%")
-            ->orderBy("t_numer", "asc")
-            ->get();
+        if ($request->exactly == true) {
+            $result = Question::with("answer")
+                // ->where("t_numer", $request->numertest)
+                ->where("t_numer", "like", $request->numertest . "%")
+                ->orderBy("t_numer", "asc")
+                ->get();
+        } else {
+            $result = Question::with("answer")
+                // ->where("t_numer", $request->numertest)
+                ->where("t_numer", $request->numertest)
+                ->orderBy("t_numer", "asc")
+                ->get();
+        }
 
 
         $url_dat = [
@@ -222,23 +389,17 @@ class admintestController extends Controller
         Auth::logout();
         return redirect('/');
     }
-    public function delklass(Request $request)
-    {
-        $rezult = Klass::destroy($request->klassid);
-        $url_dat = [
-            "school" => $rezult,
-        ];
-        return ($url_dat);
-    }
+
     public function updateadmin(Request $request)
     {
         $klass = Klass::orderBy('nameklass', 'asc')->get();
         //->orderBy('t_numer', 'desc')all();
         $school = School::orderBy('nameschool', 'asc')->get();
+        $pass = Instal::find(11)->data;
         $url_dat = [
             'klass' => $klass,
             "school" => $school,
-            "password"=>"778611",
+            "password" => $pass,
         ];
         return ($url_dat);
     }

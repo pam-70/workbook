@@ -24,8 +24,10 @@
                   >
                     Просмотреть
                   </button>
+                                  <input type="checkbox" id="checkbox" v-model="exactly" />
+                <label for="checkbox">По первым цифрам</label>
                 </div>
-                <div class="col">
+                <div class="col-sm">
                   <button
                     type="button"
                     class="btn btn-success"
@@ -113,6 +115,7 @@ export default {
       numertest: "",
       put: "pict_test/",
       all_test: "",
+      exactly: false,//точное совпадение номера задания
     };
   },
   mounted() {
@@ -132,6 +135,7 @@ export default {
       const data_post = {
         // передаем данные
         numertest: this.numertest,
+        exactly: this.exactly,
       };
       axios.post("/alltest", data_post).then((response) => {
         this.all_quest = response.data.result;

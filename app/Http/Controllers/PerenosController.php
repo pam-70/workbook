@@ -20,10 +20,27 @@ use Illuminate\Http\Request;
 
 class PerenosController extends Controller
 {
-    public function perenos()
+    public function perenos(){
 
+        
+    }
+    public function perenos17()
     {
-         $result = Question::select('t_numer')
+        $resukt=User::where("school_id", 2)
+        ->where("klass_id", 20)
+        ->max("numer");
+        echo ($resukt."<br>");
+        for ($i = $resukt+1; $i <= $resukt+3; $i++) {
+            echo($i."<br>");
+        }
+        
+        dd($resukt);
+
+    }
+        public function perenos16()
+        {
+        //номера всех тестов 
+        $result = Question::select('t_numer')
          ->distinct()->orderBy('t_numer', 'asc')->get();
         //     ->where("t_numer", 417021)
         //     ->get();
@@ -38,16 +55,9 @@ class PerenosController extends Controller
             // }
         }
         dd($result);
-
-
-
-
-
-
-
         //Resulquestion::with("question", "resultanswer")
         // $result=0;
-        dd($result);;
+     
     }
     public function perenos15()
 

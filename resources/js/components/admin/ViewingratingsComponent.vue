@@ -78,10 +78,8 @@
 
                   <input type="radio" id="two" value="6" v-model="quarter" />
                   <label for="two">Четвертая</label>
-
-                  
                 </div>
-                <div class="col"> </div>
+                <div class="col"></div>
               </div>
             </div>
           </div>
@@ -95,17 +93,61 @@
                 v-for="result in allresult"
                 :key="result.message"
               >
-                <span>
-                  {{
-                    " Ученик  " +
-                    result.numer +
-                    " задание №" +
-                    result.t_numer +
-                    " отметка (" +
-                    result.mark +
-                    ")   время " +
-                    new Date(result.updated_at).toLocaleString()
-                  }}
+                <span v-if="(result.mark == 5)"
+                  ><font color="#B32821">
+                    {{
+                      " Ученик  " +
+                      result.numer +
+                      " задание №" +
+                      result.t_numer +
+                      " отметка (" +
+                      result.mark +
+                      ")   время " +
+                      new Date(result.updated_at).toLocaleString()
+                    }}
+                  </font>
+                </span>
+                <span v-if="(result.mark ==4)"
+                  ><font color="#008000">
+                    {{
+                      " Ученик  " +
+                      result.numer +
+                      " задание №" +
+                      result.t_numer +
+                      " отметка (" +
+                      result.mark +
+                      ")   время " +
+                      new Date(result.updated_at).toLocaleString()
+                    }}
+                  </font>
+                </span>
+                <span v-if="(result.mark == 3)"
+                  ><font color="#4169E1">
+                    {{
+                      " Ученик  " +
+                      result.numer +
+                      " задание №" +
+                      result.t_numer +
+                      " отметка (" +
+                      result.mark +
+                      ")   время " +
+                      new Date(result.updated_at).toLocaleString()
+                    }}
+                  </font>
+                </span>
+                <span v-if="(result.mark == 2)"
+                  ><font color="#000000">
+                    {{
+                      " Ученик  " +
+                      result.numer +
+                      " задание №" +
+                      result.t_numer +
+                      " отметка (" +
+                      result.mark +
+                      ")   время " +
+                      new Date(result.updated_at).toLocaleString()
+                    }}
+                  </font>
                 </span>
               </div>
             </div>
@@ -149,11 +191,8 @@ export default {
   methods: {
     update: function () {
       //получить данные об usere
-      //console.log("0000000000000000");
-      // this.formatdate();
       axios.post("/updateadmin").then((response) => {
         this.all_school = response.data.school;
-        //console.log(response.data);
       });
     },
     filtrklass: function () {
@@ -187,12 +226,11 @@ export default {
           //console.log(response.data.result);
         });
       }
-     // console.log(this.quarter);
+      // console.log(this.quarter);
       //console.log(this.selected_klass);
     },
-    clearform: function(){
-      this.allresult="";
-
+    clearform: function () {
+      this.allresult = "";
     },
   },
 };

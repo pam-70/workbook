@@ -57,5 +57,10 @@ Route::match(['get', 'post'], '/updateinstall', ['as' => 'updateinstall', 'uses'
 Route::match(['get', 'post'], '/saveinstal', ['as' => 'saveinstal', 'uses' => 'App\Http\Controllers\admintestController@saveinstal']);//сохранить изменения в базе инсталл
 Route::match(['get', 'post'], '/addstudent', ['as' => 'addstudent', 'uses' => 'App\Http\Controllers\admintestController@addstudent']);//добавить судентов в базу
 Route::match(['get', 'post'], '/filtrpass', ['as' => 'filtrpass', 'uses' => 'App\Http\Controllers\admintestController@filtrpass']);//вывод логинов и паролей
+Route::match(['get', 'post'], '/deluser', ['as' => 'deluser', 'uses' => 'App\Http\Controllers\admintestController@deluser']);//удалить пароли класса
+Route::match(['get', 'post'], '/addquest', ['as' => 'addquest', 'uses' => 'App\Http\Controllers\admintestController@addquest']);//добавление теста
+Route::match(['get', 'post'], '/watchquest', ['as' => 'watchquest', 'uses' => 'App\Http\Controllers\admintestController@watchquest']);//просмотр вопроса по id
+Route::match(['get', 'post'], '/editquest', ['as' => 'editquest', 'uses' => 'App\Http\Controllers\admintestController@editquest']);//обновление вопросов
+Route::match(['get', 'post'], '/delquest', ['as' => 'delquest', 'uses' => 'App\Http\Controllers\admintestController@delquest']);//удаление вопроса
 
 
